@@ -1,0 +1,87 @@
+form{
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    font-size: 15px;
+}
+
+.name-input input,.amount-input input {
+    padding: 4px 50px 4px 7px;
+}
+
+.sub-but button{
+    background-color: red;
+    border: 1px solid red;
+    padding: 6px 33px;
+    border-radius: 12px;
+    color: #ffff;
+    font-size: 15px;
+    font-weight: 800;
+}
+.sub-but{
+    display: flex;
+    justify-content: center;
+}
+#categery{
+    padding: 4px 96px 4px 7px;
+}
+.sort-options{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1px;
+   padding: 10px 0px;
+}
+.member-table{
+    margin-top: 50px;
+    font-size: 14px;
+}
+
+.sort-options input,
+.sort-options select{
+padding: 3px 6px;
+}
+
+.bi-x::before {
+    content: "\f62a";
+    background: white;
+    border-radius: 21px;
+    padding: 7px;
+    color: black;
+}   
+
+.mem-detail{
+        display: flex ;
+         flex-direction: column;
+        gap: 20px;
+}
+.mem-detail input{
+    border: none;
+    outline: none;
+    padding: 3px 20px 3px 2px;
+    margin-left: 10px;
+    background-color: inherit;
+    border:1px solid #e3d4d4 ;
+    border-radius: 5px;
+}
+.pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.pagination svg{
+    font-size: 30px;
+}
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+.sidebarArea{
+    z-index: 3; 
+}
