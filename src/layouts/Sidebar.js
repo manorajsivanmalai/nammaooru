@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import user1 from "../assets/images/users/user4.jpg";
 import probg from "../assets/images/bg/download.jpg";
 import svmrock from "../assets/images/bg/svmrock.jpg"
-
 const navigation = [
   {
     title: "Dashboard",
@@ -16,10 +15,15 @@ const navigation = [
     icon: "bi bi-people",
   },
   {
-    title: "MemberDeails",
-    despath: "/memberdeails",
-    icon: "bi bi-patch-check",
+    title: "Expenses",
+    despath: "/expenses",
+    icon: "bi bi-cash-coin",
   },
+  // {
+  //   title: "MemberDeails",
+  //   despath: "/memberdeails",
+  //   icon: "bi bi-patch-check",
+  // },
   // {
   //   title: "Buttons",
   //   despath: "/buttons",
@@ -45,11 +49,7 @@ const navigation = [
   //   despath: "/forms",
   //   icon: "bi bi-textarea-resize",
   // },
-  {
-    title: "Breadcrumbs",
-    despath: "/breadcrumbs",
-    icon: "bi bi-link",
-  },
+  
   {
     title: "About",
     despath: "/about",

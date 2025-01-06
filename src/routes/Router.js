@@ -9,13 +9,13 @@ const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
 const Starter = lazy(() => import("../views/Starter.js"));
 const About = lazy(() => import("../views/About.js"));
 const AddMembers = lazy(() => import("../views/ui/AddMembers.js"));
-const MemberDeails = lazy(() => import("../views/ui/MemberDeails"));
+const MemberDeails = lazy(() => import("../components/MemberDeails"));
 // const Buttons = lazy(() => import("../views/ui/Buttons"));
 // const Cards = lazy(() => import("../views/ui/Cards"));
 // const Grid = lazy(() => import("../views/ui/Grid"));
 // const Tables = lazy(() => import("../views/ui/Tables"));
 // const Forms = lazy(() => import("../views/ui/Forms"));
-const Breadcrumbs = lazy(() => import("../views/ui/Breadcrumbs"));
+const Expenses = lazy(() => import("../views/ui/Expenses.js"));
 
 /*****Routes******/
 
@@ -34,7 +34,7 @@ const ThemeRoutes = [
       // { path: "/grid", exact: true, element: <Grid /> },
       // { path: "/table", exact: true, element: <Tables /> },
       // { path: "/forms", exact: true, element: <Forms /> },
-      { path: "/breadcrumbs", exact: true, element: <Breadcrumbs /> },
+      { path: "/expenses", exact: true, element: <Expenses /> },
     ],
   },
 ];

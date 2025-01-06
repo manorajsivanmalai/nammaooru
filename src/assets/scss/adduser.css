@@ -25,9 +25,6 @@ form{
     display: flex;
     justify-content: center;
 }
-#categery{
-    padding: 4px 96px 4px 7px;
-}
 .sort-options{
     display: flex;
     justify-content: space-between;
@@ -55,17 +52,28 @@ padding: 3px 6px;
 
 .mem-detail{
         display: flex ;
-         flex-direction: column;
+        flex-direction: column;
         gap: 20px;
+        margin-top: 40px;
 }
-.mem-detail input{
+.mem-detail input,.mem-detail #category{
     border: none;
     outline: none;
-    padding: 3px 20px 3px 2px;
+    padding: 8px 46px 8px 15px;
     margin-left: 10px;
     background-color: inherit;
     border:1px solid #e3d4d4 ;
     border-radius: 5px;
+}
+.mem-detail #category
+{
+    padding: 8px 99px 8px 15px;
+}
+
+.mem-detail div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 .pagination{
     display: flex;
@@ -84,4 +92,15 @@ padding: 3px 6px;
 }
 .sidebarArea{
     z-index: 3; 
+}
+.save button{
+  padding: 10px 20px 10px 20px;
+}
+.save{
+ justify-content: center !important;
+}
+#textAdress{
+    padding: 3px 4px 28px 6px;
+    width: 72%;
+    border: solid 1px #e3d4d4;
 }

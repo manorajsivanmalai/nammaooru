@@ -88,8 +88,8 @@ const Membertable = () => {
           onChange={(e) => setCategories(e.target.value)}
         >
           <option value="">All Categories</option>
-          {[...new Set(data.map((item) => item.category))].map((category) => (
-            <option key={category} value={category}>
+          {[...new Set(data.map((item) => item.category))].map((category,index) => (
+            <option key={index} value={category}>
               {category}
             </option>
           ))}
@@ -113,8 +113,8 @@ const Membertable = () => {
         <tbody>
           {paginatedData
            
-            .map((item) => (
-              <tr key={item.id}>
+            .map((item,index) => (
+              <tr key={index}>
                 <td>{item.id}</td>
                 <td>{item.name}</td>
                 <td>{item.amount}</td>
