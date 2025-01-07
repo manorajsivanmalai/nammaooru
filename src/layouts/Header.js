@@ -64,7 +64,7 @@ const Header = () => {
         <Nav className="me-auto" navbar>
           <NavItem>
             <Link to="/starter" className="nav-link">
-              Starter
+              overview
             </Link>
           </NavItem>
           <NavItem>
@@ -74,7 +74,7 @@ const Header = () => {
           </NavItem>
           <NavItem>
             <Link to="/showexpenses" className="nav-link">
-            showexpenses
+            expenses
             </Link>
           </NavItem>
         </Nav>

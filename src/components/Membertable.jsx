@@ -11,7 +11,7 @@ const Membertable = () => {
   const [sortOrder, setSortOrder] = useState("asc");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-  const {data,setData}=useContext(DataContext);
+  const {data}=useContext(DataContext);
 
 
   const sortedData = [...data].sort((a, b) => {

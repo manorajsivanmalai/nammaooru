@@ -37,9 +37,9 @@ const [formData,setFormdata]=useState({
      })
     
     }
-    console.log(formData);
+    
     return (
-        <div>
+        <div className='adduser'>
             <form
                 onSubmit={(e)=>handleFormSubmission(e)}
                 className=''>

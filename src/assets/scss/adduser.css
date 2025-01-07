@@ -11,7 +11,9 @@ form{
 .name-input input,.amount-input input {
     padding: 4px 50px 4px 7px;
 }
-
+.adduser #category{
+  padding: 4px 94px 4px 7px;
+}
 .sub-but button{
     background-color: red;
     border: 1px solid red;
@@ -164,7 +166,7 @@ padding: 3px 6px;
     font-size: 40px;
 }
 
-  
+
 
 /* collctionsamount.js */
 

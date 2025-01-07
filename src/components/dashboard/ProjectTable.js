@@ -48,10 +48,10 @@ const ProjectTables = () => {
     <div>
       <Card>
         <CardBody>
-          <CardTitle tag="h5">Pongal Program Celebration</CardTitle>
-          <CardSubtitle className="mb-2 text-muted" tag="h6">
-           Program Administrators
-          </CardSubtitle>
+          <CardTitle tag="h5"> Program Administrators</CardTitle>
+            <CardSubtitle className="mb-2 text-muted" tag="h6">
+             contact us
+            </CardSubtitle>
 
           <Table className="no-wrap mt-3 align-middle" responsive borderless>
             <thead>
