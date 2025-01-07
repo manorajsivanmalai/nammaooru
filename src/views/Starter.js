@@ -15,8 +15,7 @@ const BlogData = [
     image: bg1,
     title: "This is simple blog",
     subtitle: "2 comments, 1 Like",
-    description:
-      "This is a wider card with supporting text below as a natural lead-in to additional content.",
+    description:"This is a wider card with supporting text below as a natural lead-in to additional content.",
     btnbg: "primary",
   },
   {
