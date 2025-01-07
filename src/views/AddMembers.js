@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import AddUser from "../../components/Adduser";
+import AddUser from "../components/Adduser";
 
 const AddMembers = () => {
 

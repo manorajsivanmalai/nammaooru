@@ -2,7 +2,8 @@ import React, { useContext, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import "../assets/scss/adduser.css";
 import { DataContext } from '../contextapi/dataContextApi';
-
+import { FaSave } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 const MemberDetails = () => {
     const location = useLocation();
     const { member } = location.state || {}; // Get member details from state
@@ -27,9 +28,13 @@ const MemberDetails = () => {
             return{...prev,[name]:value};
         })
     };
-  console.log(data);
+    
     const handleClick=(e)=>{
         
+    }
+
+  const handleDelete=(e)=>{
+
     }
 
     return (
@@ -99,7 +104,8 @@ const MemberDetails = () => {
                         ></textarea>
                     </div>
                   <div className='save'>
-                     <button onClick={(e)=>handleClick(e)} >Save Changes</button>
+                     <button onClick={(e)=>handleClick(e)} >Save  <FaSave /> </button>
+                     <button onClick={(e)=>handleDelete(e)} >Delete <MdDelete /></button>
                   </div>
                 </div>
             ) : (

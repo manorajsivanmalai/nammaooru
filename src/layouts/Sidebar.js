@@ -1,7 +1,5 @@
 import { Button, Nav, NavItem } from "reactstrap";
 import { Link, useLocation } from "react-router-dom";
-import user1 from "../assets/images/users/user4.jpg";
-import probg from "../assets/images/bg/download.jpg";
 import svmrock from "../assets/images/bg/svmrock.jpg"
 const navigation = [
   {
@@ -15,46 +13,11 @@ const navigation = [
     icon: "bi bi-people",
   },
   {
-    title: "Expenses",
+    title: "AddExpenses",
     despath: "/expenses",
     icon: "bi bi-cash-coin",
   },
-  // {
-  //   title: "MemberDeails",
-  //   despath: "/memberdeails",
-  //   icon: "bi bi-patch-check",
-  // },
-  // {
-  //   title: "Buttons",
-  //   despath: "/buttons",
-  //   icon: "bi bi-hdd-stack",
-  // },
-  {
-    title: "Cards",
-    despath: "/cards",
-    icon: "bi bi-card-text",
-  },
-  // {
-  //   title: "Grid",
-  //   despath: "/grid",
-  //   icon: "bi bi-columns",
-  // },
-  // {
-  //   title: "Table",
-  //   despath: "/table",
-  //   icon: "bi bi-layout-split",
-  // },
-  // {
-  //   title: "Forms",
-  //   despath: "/forms",
-  //   icon: "bi bi-textarea-resize",
-  // },
   
-  {
-    title: "About",
-    despath: "/about",
-    icon: "bi bi-bell",
-  },
 ];
 
 const Sidebar = () => {
@@ -71,7 +34,6 @@ const Sidebar = () => {
         style={{ background: `url(${svmrock}) no-repeat` }}
       >
         <div className="p-3 d-flex">
-          <img src={user1} alt="user" width="50" className="rounded-circle" />
           <Button
             color="white"
             className="ms-auto text-white d-lg-none"
@@ -99,15 +61,7 @@ const Sidebar = () => {
               </Link>
             </NavItem>
           ))}
-          <Button
-            color="danger"
-            tag="a"
-            target="_blank"
-            className="mt-3"
-           
-          >
-            Upgrade To Pro
-          </Button>
+         
         </Nav>
       </div>
     </div>

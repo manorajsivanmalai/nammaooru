@@ -7,7 +7,7 @@ export const DataContext = createContext();
 export const DataProvider = ({ children }) => {
   const [data, setData] = useState([
         // 100 unique dummy records
-        { id: 1, name: "Rahul Sharma", amount: 500, category: "boys" },
+        { id: 1, name: "Rahul Sharma", amount: 500, category: "boys",date:"12-01-2025" },
         { id: 2, name: "Priya Singh", amount: 200, category: "girls" },
         { id: 3, name: "Amit Kumar", amount: 100, category: "sponsors" },
         { id: 4, name: "Sneha Roy", amount: 350, category: "sponsors" },

@@ -7,16 +7,13 @@ const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
 /***** Pages ****/
 
 const Starter = lazy(() => import("../views/Starter.js"));
-const About = lazy(() => import("../views/About.js"));
-const AddMembers = lazy(() => import("../views/ui/AddMembers.js"));
+const CollectionAmount = lazy(() => import("../views/CollectionsAmount.js"));
+const AddMembers = lazy(() => import("../views/AddMembers.js"));
 const MemberDeails = lazy(() => import("../components/MemberDeails"));
-// const Buttons = lazy(() => import("../views/ui/Buttons"));
-// const Cards = lazy(() => import("../views/ui/Cards"));
-// const Grid = lazy(() => import("../views/ui/Grid"));
-// const Tables = lazy(() => import("../views/ui/Tables"));
-// const Forms = lazy(() => import("../views/ui/Forms"));
-const Expenses = lazy(() => import("../views/ui/Expenses.js"));
-
+ const ShowExpenses = lazy(() => import("../views/ShowExpenses"));
+const Expenses = lazy(() => import("../views/Expenses.js"));
+const ExpensesDetails = lazy(()=> import("../components/Expensesdetails.jsx"));
+const Login =lazy(()=> import("../views/Login.js"));
 /*****Routes******/
 
 const ThemeRoutes = [
@@ -26,15 +23,13 @@ const ThemeRoutes = [
     children: [
       { path: "/", element: <Navigate to="/starter" /> },
       { path: "/starter", exact: true, element: <Starter /> },
-      { path: "/about", exact: true, element: <About /> },
+      { path: "/collectionAmount", exact: true, element: <CollectionAmount /> },
       { path: "/addmembers", exact: true, element: <AddMembers /> },
       { path: "/memberdeails", exact: true, element: <MemberDeails /> },
-      // { path: "/buttons", exact: true, element: <Buttons /> },
-      // { path: "/cards", exact: true, element: <Cards /> },
-      // { path: "/grid", exact: true, element: <Grid /> },
-      // { path: "/table", exact: true, element: <Tables /> },
-      // { path: "/forms", exact: true, element: <Forms /> },
+      { path:"/expensesdetails",exact:true,element:<ExpensesDetails />},
+      { path: "/showexpenses", exact: true, element: <ShowExpenses /> },
       { path: "/expenses", exact: true, element: <Expenses /> },
+      { path: "/login", exact: true, element: <Login /> },
     ],
   },
 ];
