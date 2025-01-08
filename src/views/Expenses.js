@@ -3,64 +3,60 @@ import '../assets/scss/adduser.css';
 import { useState } from "react";
 import { ExpensesContext } from "../contextapi/expensesContextApi";
 import { FaEdit } from "react-icons/fa";
-import { IoMdArrowDroprightCircle,IoMdArrowDropleftCircle  } from "react-icons/io";
+import { IoMdArrowDroprightCircle, IoMdArrowDropleftCircle } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 const Expenses = () => {
+    const { expenses, setExpenses, exploading } = useContext(ExpensesContext);
     const [formdata, setFormdata] = useState({
         reason: '',
-        amount: ''
-    })
-    const { expense, setExpense } = useContext(ExpensesContext);
+        amount: 0
+    });
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
-    const handlSubmitExpenses = (e) => {
-        e.preventDefault();
-        setExpense((prev) => [...prev, formdata])
-        setFormdata({
-            reason: '',
-            amount: ''
-        })
-    }
-    const totalPages = Math.ceil(expense.length / itemsPerPage);
-    const paginatedData = expense.slice(
+    const totalPages = exploading ? Math.ceil(expenses.length / itemsPerPage) : 0;
+    const paginatedData = expenses?.slice(
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
-      );
+    );
 
-      const now = new Date();
-      const day = String(now.getDate()).padStart(2, '0');
-      const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
-      const year = now.getFullYear();
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      
-      const formattedDate = `${day}-${month}-${year} ${hours}:${minutes}`;
-      console.log(formattedDate);
-  
+
     const handleChange = (e) => {
         setFormdata((prev) => {
-            return { ...prev, id:expense.length+1, [e.target.name]: e.target.value, date: formattedDate}
+            return { ...prev, [e.target.name]: e.target.value }
+        })
+    }
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const handlSubmitExpenses = (e) => {
+        e.preventDefault();
+        setExpenses((prev) => [
+            ...prev, 
+           formdata
+          ]);
+          
+        setFormdata({
+            reason: '',
+            amount: 0
         })
     }
 
 
 
-    const handleNextPage = () => {
-        if (currentPage < totalPages) {
-          setCurrentPage(currentPage + 1);
-        }
-      };
-    
-      const handlePreviousPage = () => {
-        if (currentPage > 1) {
-          setCurrentPage(currentPage - 1);
-        }
-      };
-      const navigate = useNavigate();
-      const handleLink = (item) => {
+    const navigate = useNavigate();
+    const handleLink = (item) => {
         navigate("/expensesdetails", { state: { exp: item } });
-      };
-      
+    };
+
 
     return (
         <div className="expenses">
@@ -71,7 +67,7 @@ const Expenses = () => {
                 </div>
                 <div>
                     <label>Amount</label>
-                    <input type="text" name="amount" value={formdata.amount || ''} required onChange={(e) => handleChange(e)} />
+                    <input type="number" name="amount" value={(formdata.amount ===undefined || formdata.amount === 0)? '' : formdata.amount} required onChange={(e) => handleChange(e)} />
                 </div>
 
                 <div>
@@ -90,7 +86,7 @@ const Expenses = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {paginatedData.length !== 0 ? paginatedData.map((item, index) => (
+                        {paginatedData?.length !== 0 ? paginatedData?.map((item, index) => (
                             <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{item.reason}</td>
@@ -104,12 +100,12 @@ const Expenses = () => {
                         }
                     </tbody>
                 </table>
-            <div className="pagination">
-                    <IoMdArrowDropleftCircle onClick={handlePreviousPage} disabled={currentPage === 1} style={{color:currentPage === 1?"#dbb1b1":"inherit"}}/>
+                <div className="pagination">
+                    <IoMdArrowDropleftCircle onClick={handlePreviousPage} disabled={currentPage === 1} style={{ color: currentPage === 1 ? "#dbb1b1" : "inherit" }} />
                     <span>
-                    Page {currentPage} of {totalPages}
+                        Page {currentPage} of {totalPages}
                     </span>
-                    <IoMdArrowDroprightCircle onClick={handleNextPage} disabled={currentPage === totalPages} style={{color:currentPage === totalPages?"#dbb1b1":"inherit"}}/>
+                    <IoMdArrowDroprightCircle onClick={handleNextPage} disabled={currentPage === totalPages} style={{ color: currentPage === totalPages ? "#dbb1b1" : "inherit" }} />
                 </div>
             </div>
         </div>

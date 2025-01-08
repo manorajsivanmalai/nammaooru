@@ -12,9 +12,9 @@ import ShowExpenses from "../views/ShowExpenses";
 import Expenses from "../views/Expenses.js";
 import ExpensesDetails from "../components/Expensesdetails.jsx";
 import Login from "../views/Login.js";
+import AdminRoute from "./AdminRoute.js";
 
 /***** Routes *****/
-
 const ThemeRoutes = [
   {
     path: "/",
@@ -23,11 +23,44 @@ const ThemeRoutes = [
       { path: "/", element: <Navigate to="/starter" /> },
       { path: "/starter", element: <Starter /> },
       { path: "/collectionAmount", element: <CollectionAmount /> },
-      { path: "/addmembers", element: <AddMembers /> },
-      { path: "/memberdeails", element: <MemberDeails /> },
-      { path: "/expensesdetails", element: <ExpensesDetails /> },
-      { path: "/showexpenses", element: <ShowExpenses /> },
-      { path: "/expenses", element: <Expenses /> },
+      { 
+        path: "/addmembers", 
+        element: (
+          <AdminRoute>
+            <AddMembers />
+          </AdminRoute>
+        ),
+      },
+      { 
+        path: "/memberdetails", 
+        element: (
+          <AdminRoute>
+           <MemberDeails />
+          </AdminRoute>
+        ),
+      },
+      { 
+        path: "/expensesdetails", 
+        element: (
+          <AdminRoute>
+          <ExpensesDetails />
+          </AdminRoute>
+        ),
+      },
+      { 
+        path: "/showexpenses", 
+        element: (    
+            <ShowExpenses />
+        ),
+      },
+      { 
+        path: "/expenses", 
+        element: (
+          <AdminRoute>
+            <Expenses />
+          </AdminRoute>
+        ),
+      },
       { path: "/login", element: <Login /> },
     ],
   },

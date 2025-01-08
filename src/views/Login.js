@@ -1,26 +1,61 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import "../assets/scss/adduser.css"
-
+import {UserContext} from "../contextapi/loginContextApi";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
+const {islogin,setIslogin}=useContext(UserContext);
 const [formdata,setFormdata]=useState({
     username:'',
     password:''
 });
+const navigate=useNavigate();
+
 const handleChange=(e)=>{
     const {name,value}=e.target;
     setFormdata((pre)=>{
         return {...pre,[name]:value}
     })
 }
-const handleSubmit=(e)=>{
+
+const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    try {
+     
+      const response = await fetch('http://localhost:8888/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formdata), 
+      });
+  
+      // Check if the response is successful
+      if (!response.ok) {
+        throw new Error('Login failed');
+      }else{
+        const data = await response.json(); 
+        setIslogin(data.islogin); 
+        if(data.islogin){
+            navigate('/addmembers')
+         }
+      }
+  
+  
+    } catch (error) {
+      console.error('Error:', error);
+      setIslogin(false); 
+    }
 
     setFormdata({
-        username:'',
-        password:''
-    })
-}
+      username: '',
+      password: '',
+    });
 
+   
+  };
+  
+ 
     return (
         <div className="container login">
             <div className="login-container">

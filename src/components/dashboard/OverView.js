@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import { DataContext } from "../../contextapi/dataContextApi";
+import { DataContext } from "../../contextapi/memberContextApi";
 import { ExpensesContext } from "../../contextapi/expensesContextApi";
 
 import { FaPeopleGroup } from "react-icons/fa6";
@@ -10,17 +10,27 @@ import { GiExpense } from "react-icons/gi";
 import { AiFillBank } from "react-icons/ai";
 const OverView = () => {
 
-    const {data,setData} =useContext(DataContext);
-    const {expense,setExpense} =useContext(ExpensesContext);
-    const ttlclAmount = data.reduce((total, item) => {
-        return total + (parseInt(item.amount) || 0);
-      }, 0);
+    const {memclData,loading} =useContext(DataContext);
+    const {expense,exploading} = useContext(ExpensesContext);
 
-    const ttlExpense=expense.reduce((total,item)=>{
-        return total +(parseInt(item.amount) || 0);
-    },0)  
+    const ttlclAmount = !loading && memclData?.length > 0
+    ? memclData.reduce((total, item) => {
+        const amount = parseInt(item.amount);
+        return total + (Number.isNaN(amount) ? 0 : amount); 
+      }, 0)
+    : 0;
+  
+  const ttlExpense = !exploading && expense?.length > 0
+    ? expense.reduce((total, item) => {
+        const amount = parseInt(item.amount);
+        return total + (Number.isNaN(amount) ? 0 : amount); 
+      }, 0)
+    : 0;
+
 
   return (
+  
+     
     <div className="overview-board">
          <main className="py-6 bg-surface-secondary">
                 <div className="container-fluid">
@@ -31,7 +41,7 @@ const OverView = () => {
                                     <div className="row">
                                         <div className="col">
                                             <span className="h6 font-semibold text-muted text-sm d-block mb-2">Total Members</span>
-                                            <span className="h3 font-bold mb-0">{data.length}</span>
+                                            <span className="h3 font-bold mb-0">{!loading ? memclData.length:0}</span>
                                         </div>
                                         <div className="col-auto">
                                             <div className="icon icon-shape  text-lg rounded-circle">
@@ -49,7 +59,7 @@ const OverView = () => {
                                     <div className="row">
                                         <div className="col">
                                             <span className="h6 font-semibold text-muted text-sm d-block mb-2">Total Collection Amount</span>
-                                            <span className="h3 font-bold mb-0">{ttlclAmount}</span>
+                                            <span className="h3 font-bold mb-0">{!loading ? ttlclAmount:0}</span>
                                         </div>
                                         <div className="col-auto">
                                             <div className="icon icon-shape   text-lg rounded-circle">
@@ -67,7 +77,7 @@ const OverView = () => {
                                     <div className="row">
                                         <div className="col">
                                             <span className="h6 font-semibold text-muted text-sm d-block mb-2">Expenses</span>
-                                            <span className="h3 font-bold mb-0">{ttlExpense}</span>
+                                            <span className="h3 font-bold mb-0">{!exploading ? ttlExpense:0}</span>
                                         </div>
                                         <div className="col-auto">
                                             <div className="icon icon-shape text-lg rounded-circle">
@@ -85,7 +95,7 @@ const OverView = () => {
                                     <div className="row">
                                         <div className="col">
                                             <span className="h6 font-semibold text-muted text-sm d-block mb-2">Available balance</span>
-                                            <span className="h3 font-bold mb-0">{ttlclAmount-ttlExpense}</span>
+                                            <span className="h3 font-bold mb-0">{!loading && !exploading ? ttlclAmount - ttlExpense :0}</span>
                                         </div>
                                         <div className="col-auto">
                                             <div className="icon icon-shape text-lg rounded-circle">
@@ -102,6 +112,7 @@ const OverView = () => {
                 </div>
             </main>
     </div>
+
   )
 }
 export default OverView

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import {
   Navbar,
@@ -15,10 +15,10 @@ import {
 import Logo from "./Logo";
 import { ReactComponent as LogoWhite } from "../assets/images/logos/materialprowhite.svg";
 import user1 from "../assets/images/users/user4.jpg";
-
+import { UserContext } from "../contextapi/loginContextApi";
 const Header = () => {
   const [isOpen, setIsOpen] = React.useState(false);
-
+  const {islogin} =useContext(UserContext);
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
@@ -26,7 +26,7 @@ const Header = () => {
     setIsOpen(!isOpen);
   };
   const showMobilemenu = () => {
-    document.getElementById("sidebarArea").classList.toggle("showSidebar");
+       document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
   return (
     <Navbar color="primary" dark expand="md" className="fix-header">
@@ -37,13 +37,15 @@ const Header = () => {
         <NavbarBrand href="/">
           <LogoWhite className=" d-lg-none" />
         </NavbarBrand>
-        <Button
+       {
+       islogin && <Button
           color="primary"
           className=" d-lg-none"
           onClick={() => showMobilemenu()}
         >
           <i className="bi bi-list"></i>
         </Button>
+       } 
       </div>
       <div className="hstack gap-2">
         <Button

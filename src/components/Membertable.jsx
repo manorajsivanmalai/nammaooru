@@ -3,7 +3,7 @@ import "../assets/scss/adduser.css";
 import { FaEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { IoMdArrowDroprightCircle,IoMdArrowDropleftCircle  } from "react-icons/io";
-import { DataContext } from "../contextapi/dataContextApi";
+import { DataContext } from "../contextapi/memberContextApi";
 const Membertable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [categories, setCategories] = useState("");
@@ -11,10 +11,10 @@ const Membertable = () => {
   const [sortOrder, setSortOrder] = useState("asc");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-  const {data}=useContext(DataContext);
+  const {memclData}=useContext(DataContext);
 
 
-  const sortedData = [...data].sort((a, b) => {
+  const sortedData = [...memclData].sort((a, b) => {
     const aValue = a[sortBy];
     const bValue = b[sortBy];
     if (sortOrder === "asc") {
@@ -45,7 +45,7 @@ const Membertable = () => {
 
   const navigate = useNavigate();
   const handleLink = (item) => {
-    navigate("/memberdeails", { state: { member: item } });
+     navigate("/memberdetails", { state: { member: item } });
   };
 
   const paginatedData = sortedData.filter(
@@ -88,7 +88,7 @@ const Membertable = () => {
           onChange={(e) => setCategories(e.target.value)}
         >
           <option value="">All Categories</option>
-          {[...new Set(data.map((item) => item.category))].map((category,index) => (
+          {[...new Set(memclData.map((item) => item.category))].map((category,index) => (
             <option key={index} value={category}>
               {category}
             </option>

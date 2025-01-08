@@ -1,29 +1,29 @@
 import React, { useContext, useState } from 'react';
 import '../assets/scss/adduser.css';
 import Membertable from './Membertable';
-import { DataContext } from '../contextapi/dataContextApi';
+import { DataContext } from '../contextapi/memberContextApi';
 const AddUser = () => {
 
-    const {data,setData}=useContext(DataContext);
+    const { setMemclData }=useContext(DataContext);
 
 const [formData,setFormdata]=useState({
-    id:data.length+1,
     name:'',
-    amount:'',
+    amount:0,
     category:'category'
 })
 
-    const handleFormSubmission = (e) => {
+const handleFormSubmission = (e) => {
         e.preventDefault();
        
       // store data to the member table
-      setData((prev)=>{
+      setMemclData((prev)=>{
        return [...prev,formData]
       })
-      console.log(formData);
+
+
     setFormdata({
         name:'',
-        amount:'',
+        amount:0,
         category:'category'
     })
       
@@ -46,11 +46,11 @@ const [formData,setFormdata]=useState({
                     <h3>Add Members</h3>
                 <div className='name-input'>
                     <label htmlFor="name"></label>
-                    <input value={formData.name} name="name" type="text" placeholder='name' onChange={(e)=>handleChange(e)} required/>
+                    <input value={formData.name || ''} name="name" type="text" placeholder='name' onChange={(e)=>handleChange(e)} required/>
                 </div>
                 <div className='amount-input'>
                     <label htmlFor="amount"></label>
-                    <input value={formData.amount} name="amount" type="text" placeholder='amount' onChange={(e)=>handleChange(e)} required />
+                    <input value={ formData.amount ===undefined || formData.amount === 0 ? '':formData.amount} name="amount" type="number" placeholder='amount' onChange={(e)=>handleChange(e)} required />
                 </div>
                  <div>
                     <select name="category" id="category" onChange={(e)=>handleChange(e)} >

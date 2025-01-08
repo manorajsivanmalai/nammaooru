@@ -1,18 +1,31 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 
-// Create the context
+
 export const ExpensesContext = createContext();
 
-// Create a provider component
+
 export const ExpensesProvider = ({ children }) => {
-  const [expense,setExpense]=useState([{
-    amount: "100",
-    date : "07-01-2025 16:54",
-    id : 1,
-   reason :  "price"}]);
+  const [expenses, setExpenses] = useState([]);
+  const [exploading, setExploading] = useState(true); 
+  const [error, setError] = useState(null); 
+
+  useEffect(() => {
+    // Fetch data from API when the component mounts
+    fetch("http://localhost:8888/api/getexpenses")
+      .then((res) => res.json())
+      .then((data) => {
+        setExpenses(data); 
+        setExploading(false); 
+      })
+      .catch((error) => {
+        console.error("Error fetching expenses:", error);
+        setError("An error occurred while fetching expenses"); 
+        setExploading(false); 
+      });
+  }, []);
 
   return (
-    <ExpensesContext.Provider value={{ expense, setExpense }}>
+    <ExpensesContext.Provider value={{ expenses, setExpenses, exploading, error }}>
       {children}
     </ExpensesContext.Provider>
   );

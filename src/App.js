@@ -1,6 +1,6 @@
 import { useRoutes } from "react-router-dom";
 import Themeroutes from "./routes/Router";
-import { DataProvider } from "./contextapi/dataContextApi";
+import { DataProvider } from "./contextapi/memberContextApi";
 import { ExpensesProvider } from "./contextapi/expensesContextApi";
 import { UserProvider } from "./contextapi/loginContextApi";
 const App = () => {
@@ -10,7 +10,7 @@ const App = () => {
     <DataProvider>
       <ExpensesProvider>
         <UserProvider>
-     <div className="dark">{routing}</div>
+         <div className="dark">{routing}</div>
         </UserProvider>
      </ExpensesProvider>
     
