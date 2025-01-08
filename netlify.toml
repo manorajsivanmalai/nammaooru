@@ -1,5 +1,6 @@
+[build]
+  functions = "netlify/functions"
 
-
-[[edge_functions]]
-function = "backend"
-path = "/test"
+[dev]
+  functions = "netlify/functions"
+  targetPort = 3000
