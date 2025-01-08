@@ -13,7 +13,7 @@ export const DataProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:8888/api/getmembers");
+        const response = await fetch("/api/getmembers");
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
