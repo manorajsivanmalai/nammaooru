@@ -2,7 +2,7 @@ import { ExpensesContext } from "../contextapi/expensesContextApi";
 import { useState, useContext } from "react";
 
 const ShowExpenses = () => {
-  const { expense, exploading } = useContext(ExpensesContext);
+  const { expenses, exploading } = useContext(ExpensesContext);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState(null);
 
@@ -10,8 +10,8 @@ const ShowExpenses = () => {
     setSearchTerm(event.target.value);
   };
 
-  const sortedData = !exploading && Array.isArray(expense)
-    ? [...expense].sort((a, b) => {
+  const sortedData = !exploading && Array.isArray(expenses)
+    ? [...expenses].sort((a, b) => {
       if (sortConfig !== null) {
         if (a[sortConfig.key] < b[sortConfig.key]) {
           return sortConfig.direction === 'ascending' ? -1 : 1;
@@ -74,19 +74,19 @@ const ShowExpenses = () => {
           <table className="table table-striped table-bordered">
             <thead>
               <tr>
-                <th onClick={() => requestSort('id')} className="sortable">Id</th>
-                <th onClick={() => requestSort('reason')} className="sortable">Reason</th>
-                <th onClick={() => requestSort('Amount')} className="sortable">Amount</th>
-                <th onClick={() => requestSort('date')} className="sortable">Date</th>
+                <th style={{width:"10%",textAlign:"center"}} onClick={() => requestSort('id')} className="sortable">Id</th>
+                <th style={{width:"40%",textAlign:"center"}} onClick={() => requestSort('reason')} className="sortable">Reason</th>
+                <th style={{width:"20%",textAlign:"center"}} onClick={() => requestSort('amount')} className="sortable">Amount</th>
+                <th style={{width:"40%",textAlign:"center"}} onClick={() => requestSort('createdAt')} className="sortable">Date</th>
               </tr>
             </thead>
             <tbody>
               {filteredData.map((item) => (
                 <tr key={item.id}>
-                  <td>{item.id}</td>
-                  <td>{item.reason}</td>
-                  <td>{item.amount.toLocaleString()}</td>
-                  <td>{formatDate(item.date)}</td>
+                  <td style={{width:"10%",textAlign:"center"}}>{item.id}</td>
+                  <td style={{width:"40%",textAlign:"center"}}>{item.reason}</td>
+                  <td style={{width:"20%",textAlign:"center"}}>{item.amount.toLocaleString()}</td>
+                  <td style={{width:"40%",textAlign:"center"}}>{formatDate(item.createdAt)}</td>
                 </tr>
               ))}
             </tbody>

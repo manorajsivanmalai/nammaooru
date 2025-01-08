@@ -92,19 +92,19 @@ const CollectionsAmount = () => {
             <table className="table table-striped table-bordered">
               <thead>
                 <tr>
-                  <th onClick={() => requestSort('id')} className="sortable">Id</th>
-                  <th onClick={() => requestSort('name')} className="sortable">Name</th>
-                  <th onClick={() => requestSort('amount')} className="sortable">Amount</th>
-                  <th onClick={() => requestSort('date')} className="sortable">Date</th>
+                  <th style={{width:"10%",textAlign:"center"}} onClick={() => requestSort('id')} className="sortable">Id</th>
+                  <th style={{width:"30%",textAlign:"center"}} onClick={() => requestSort('name')} className="sortable">Name</th>
+                  <th style={{width:"20%",textAlign:"center"}} onClick={() => requestSort('amount')} className="sortable">Amount</th>
+                  <th style={{width:"40%",textAlign:"center"}} onClick={() => requestSort('createdAt')} className="sortable">Date</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredData.map((item) => (
                   <tr key={item.id}>
-                    <td>{item.id}</td>
-                    <td>{item.name}</td>
-                    <td>{item.amount.toLocaleString()}</td>
-                    <td>{formatDate(item.createdAt)}</td>
+                    <td style={{width:"10%",textAlign:"center"}}>{item.id}</td>
+                    <td style={{width:"30%",textAlign:"center"}}>{item.name}</td>
+                    <td style={{width:"20%",textAlign:"center"}}>{item.amount.toLocaleString()}</td>
+                    <td style={{width:"40%",textAlign:"center"}}>{formatDate(item.createdAt)}</td>
                   </tr>
                 ))}
               </tbody>

@@ -19,12 +19,13 @@ router.post("/createmember",createMember);
 router.get("/getmembers",getMembers);
 
 //expenses router
-router.post("createexpense",createExpenses);
+router.post("/addexpense",createExpenses);
 router.get("/getexpenses",getExpenses);
 
 
 app.use('/api/', router);
 app.use("/api/",userRouter);
+
 
 
 module.exports.handler = serverless(app);

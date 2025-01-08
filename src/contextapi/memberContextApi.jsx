@@ -9,16 +9,15 @@ export const DataProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
- 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/api/getmembers");
+        const response = await fetch("http://localhost:8888/api/getmembers");
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
         const memberData = await response.json();
-       
+        
         setMemclData(memberData);
       } catch (error) {
         setError(error.message); 

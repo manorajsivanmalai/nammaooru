@@ -183,7 +183,7 @@ input[type="number"] {
 overflow-x:scroll ;
 }
 .ovflow table{
- width: 110%;
+  width: 120%;
 }
 
 /* login.js */

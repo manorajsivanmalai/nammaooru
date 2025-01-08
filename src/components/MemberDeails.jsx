@@ -64,7 +64,7 @@ const MemberDetails = () => {
                     </div>
                     <div>
                         <label>Category:</label>
-                      <select name="category" id="category" onChange={(e)=>handleChange(e)} >
+                      <select name="category" id="category" onChange={(e)=>handleChange(e)} value={mem.category || ""} >
                         <option value="category">select category</option>
                         <option value="boys">Boys</option>
                         <option value="ourpeople">Our People</option>

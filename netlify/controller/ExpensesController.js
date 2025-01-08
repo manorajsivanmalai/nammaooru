@@ -3,9 +3,11 @@ const Expenses = require('../model/Expensestable');
 // Create a new Expenses
 exports.createExpenses = async (req, res) => {
   try {
-    const { name, amount, category } = req.body;
+    const { reason, amount } = req.body;
+    console.log(reason ,amount);
+    
     const expense = await Expenses.create({
-      name,
+      reason,
       amount,
     });
     res.status(201).json(expense); // Send the created Expenses back as response

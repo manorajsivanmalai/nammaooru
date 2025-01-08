@@ -11,17 +11,18 @@ import { AiFillBank } from "react-icons/ai";
 const OverView = () => {
 
     const {memclData,loading} =useContext(DataContext);
-    const {expense,exploading} = useContext(ExpensesContext);
-
+    const {expenses,exploading} = useContext(ExpensesContext);
+   console.log(expenses);
+   
     const ttlclAmount = !loading && memclData?.length > 0
     ? memclData.reduce((total, item) => {
         const amount = parseInt(item.amount);
         return total + (Number.isNaN(amount) ? 0 : amount); 
       }, 0)
     : 0;
-  
-  const ttlExpense = !exploading && expense?.length > 0
-    ? expense.reduce((total, item) => {
+
+  const ttlExpense = !exploading && expenses?.length > 0
+    ? expenses.reduce((total, item) => {
         const amount = parseInt(item.amount);
         return total + (Number.isNaN(amount) ? 0 : amount); 
       }, 0)

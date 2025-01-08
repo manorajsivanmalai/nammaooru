@@ -20,11 +20,7 @@ const Expenses = () => {
     );
 
 
-    const handleChange = (e) => {
-        setFormdata((prev) => {
-            return { ...prev, [e.target.name]: e.target.value }
-        })
-    }
+  
     const handleNextPage = () => {
         if (currentPage < totalPages) {
             setCurrentPage(currentPage + 1);
@@ -37,12 +33,32 @@ const Expenses = () => {
         }
     };
 
-    const handlSubmitExpenses = (e) => {
+    const handlSubmitExpenses =async (e) => {
         e.preventDefault();
-        setExpenses((prev) => [
-            ...prev, 
-           formdata
-          ]);
+        console.log(formdata);
+        
+        try {
+            const response = await fetch("http://localhost:8888/api/addexpense", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json", 
+              },
+              body: JSON.stringify(formdata),
+            });
+        
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+        
+            const result = await response.json();
+            setExpenses((prev)=>{
+             return [...prev,result]
+            })
+           
+          } catch (error) {
+            console.error("Error:", error);
+           
+          }
           
         setFormdata({
             reason: '',
@@ -56,7 +72,11 @@ const Expenses = () => {
     const handleLink = (item) => {
         navigate("/expensesdetails", { state: { exp: item } });
     };
-
+    const handleChange = (e) => {
+        setFormdata((prev) => {
+            return { ...prev, [e.target.name]: e.target.value }
+        })
+    }
 
     return (
         <div className="expenses">
@@ -67,7 +87,7 @@ const Expenses = () => {
                 </div>
                 <div>
                     <label>Amount</label>
-                    <input type="number" name="amount" value={(formdata.amount ===undefined || formdata.amount === 0)? '' : formdata.amount} required onChange={(e) => handleChange(e)} />
+                    <input value={ formdata.amount ===undefined || formdata.amount === 0 ? '':parseInt(formdata.amount)} type="number" name="amount"  required onChange={(e) => handleChange(e)} />
                 </div>
 
                 <div>

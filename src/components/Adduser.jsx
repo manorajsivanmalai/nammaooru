@@ -4,7 +4,7 @@ import Membertable from './Membertable';
 import { DataContext } from '../contextapi/memberContextApi';
 const AddUser = () => {
 
-    const { setMemclData }=useContext(DataContext);
+ const { setMemclData }=useContext(DataContext);
 
 const [formData,setFormdata]=useState({
     name:'',
@@ -12,14 +12,32 @@ const [formData,setFormdata]=useState({
     category:'category'
 })
 
-const handleFormSubmission = (e) => {
+const handleFormSubmission =async (e) => {
         e.preventDefault();
-       
-      // store data to the member table
-      setMemclData((prev)=>{
-       return [...prev,formData]
-      })
+  
 
+    try {
+      const response = await fetch("http://localhost:8888/api/createmember", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", 
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+  
+      const result = await response.json();
+    setMemclData((prev)=>{
+       return [...prev,result]
+      })
+     
+    } catch (error) {
+      console.error("Error:", error);
+     
+    }
 
     setFormdata({
         name:'',
@@ -53,7 +71,7 @@ const handleFormSubmission = (e) => {
                     <input value={ formData.amount ===undefined || formData.amount === 0 ? '':formData.amount} name="amount" type="number" placeholder='amount' onChange={(e)=>handleChange(e)} required />
                 </div>
                  <div>
-                    <select name="category" id="category" onChange={(e)=>handleChange(e)} >
+                    <select name="category" id="category" onChange={(e)=>handleChange(e)}value={formData.category} >
                         <option value="category">select category</option>
                         <option value="boys">Boys</option>
                         <option value="ourpeople">Our People</option>
