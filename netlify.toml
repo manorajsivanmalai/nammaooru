@@ -1,8 +1,11 @@
 [build]
+  publish = "build"
   functions = "netlify/functions"
 
      [[redirects]]
      from = "/api/*"
      to = "/.netlify/functions/backend"
      status = 200
-     targetPort = 8888 
+  
+ [functions]
+  node_bundler = "esbuild"
