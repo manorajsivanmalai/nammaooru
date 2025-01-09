@@ -7,7 +7,7 @@
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "14.0.0",
     "@testing-library/user-event": "14.4.3",
-    "@vercel/postgres": "^0.10.0",
+    "@vercel/postgres": "^0.8.0",
     "apexcharts": "3.41.0",
     "bootstrap": "5.3.0",
     "bootstrap-icons": "1.10.5",
