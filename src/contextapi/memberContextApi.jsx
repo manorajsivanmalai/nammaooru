@@ -17,6 +17,7 @@ export const DataProvider = ({ children }) => {
           throw new Error("Failed to fetch data");
         }
         const memberData = await response.json();
+        console.log(memberData);
         
         setMemclData(memberData);
       } catch (error) {
