@@ -2,11 +2,12 @@
 const express = require('express');
 const cors = require('cors');
 const router = express.Router();
+require('dotenv').config();
 const serverless = require('serverless-http');
  const { createMember, getMembers,updateMember,deleteMember } = require('../controller/MemberController');
 // const {createExpenses,getExpenses,updateExpenses, deleteExpenses} = require('../controller/ExpensesController');
  const {userRouter} =require("../controller/UserController");
-require('dotenv').config();
+
 const app = express();
 app.use(express.json());
 app.use(cors());

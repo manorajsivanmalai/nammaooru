@@ -1,4 +1,4 @@
-const Member = require('../model/Membertable');
+ const Member = require('../model/Membertable');
 
 // Create a new Member
 exports.createMember = async (req, res) => {

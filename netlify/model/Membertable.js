@@ -1,4 +1,3 @@
-require('dotenv').config();
 const { Sequelize, DataTypes } = require('sequelize');
 // Initialize the Sequelize connection
 const sequelize = new Sequelize("postgres://default:oQm2pSXI5ulY@ep-patient-rain-a4vsiaah-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require", {
