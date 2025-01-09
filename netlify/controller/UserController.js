@@ -30,17 +30,5 @@ userRouter.post('/login', async (req, res) => {
   }
 });
 
-userRouter.get("/react",async (req,res)=>{
-  try{
-    const result = await pool.query(
-      'SELECT * FROM react;',
-    );
-    res.json(result);
-
-  }catch(err){
-    console.log(err);
-    
-  }
-})
 
 module.exports = { userRouter };
