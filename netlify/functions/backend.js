@@ -28,7 +28,7 @@ router.get("/",(req,res)=>{res.json("server is running")})
 
 
 app.use('/api/', router);
-// app.use("/api/",userRouter);
+ app.use("/api/",userRouter);
 
 
 
