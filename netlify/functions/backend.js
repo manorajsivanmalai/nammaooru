@@ -15,16 +15,16 @@ router.get("/",(req,res)=>{res.json("server is running")})
 
 
 //member Routers
-router.post("/createmember",createMember);
-router.get("/getmembers",getMembers);
-router.put("/member/:id",updateMember);
-router.delete("/member/:id",deleteMember);
+// router.post("/createmember",createMember);
+// router.get("/getmembers",getMembers);
+// router.put("/member/:id",updateMember);
+// router.delete("/member/:id",deleteMember);
 
-//expenses router
-router.post("/addexpense",createExpenses);
-router.get("/getexpenses",getExpenses);
-router.put("/expense/:id",updateExpenses);
-router.delete("/expense/:id",deleteExpenses)
+// //expenses router
+// router.post("/addexpense",createExpenses);
+// router.get("/getexpenses",getExpenses);
+// router.put("/expense/:id",updateExpenses);
+// router.delete("/expense/:id",deleteExpenses)
 
 
 app.use('/api/', router);
