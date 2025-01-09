@@ -1,3 +1,10 @@
+[dev]
+  framework = "create-react-app" # Optional, detected automatically
+  targetPort = 3000              # The port your framework runs on
+  port = 8888                    # The port Netlify Dev runs on
+  command = "npm start"          # Command to start your React app
+
+
 [build]
   publish = "build"
   functions = "netlify/functions"
