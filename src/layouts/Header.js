@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Navbar,
   Collapse,
@@ -18,8 +18,9 @@ import user1 from "../assets/images/users/user4.jpg";
 import { UserContext } from "../contextapi/loginContextApi";
 const Header = () => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const {islogin} =useContext(UserContext);
+  const {islogin,setIslogin} =useContext(UserContext);
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
+  const navigate=useNavigate();
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const Handletoggle = () => {
@@ -65,17 +66,17 @@ const Header = () => {
       <Collapse navbar isOpen={isOpen}>
         <Nav className="me-auto" navbar>
           <NavItem>
-            <Link to="/starter" className="nav-link">
+            <Link to="/starter" className="nav-link"  onClick={Handletoggle}>
               overview
             </Link>
           </NavItem>
           <NavItem>
-            <Link to="/collectionAmount" className="nav-link">
+            <Link to="/collectionAmount" className="nav-link"  onClick={Handletoggle}>
             collectionAmount
             </Link>
           </NavItem>
           <NavItem>
-            <Link to="/showexpenses" className="nav-link">
+            <Link to="/showexpenses" className="nav-link"  onClick={Handletoggle}>
             expenses
             </Link>
           </NavItem>
@@ -90,13 +91,13 @@ const Header = () => {
             ></img>
           </DropdownToggle>
           <DropdownMenu>
-           <>
+         {islogin ?<>
             <DropdownItem header>Info</DropdownItem>
             <DropdownItem>My Account</DropdownItem>
             <DropdownItem>Edit Profile</DropdownItem>
-            <DropdownItem>Logout</DropdownItem>
-            </>
-            <DropdownItem><Link to="/login" >Logout</Link></DropdownItem>
+            <DropdownItem onClick={(e)=>{setIslogin(false)}}>LogOut</DropdownItem>
+            </> :<DropdownItem onClick={(e)=>{navigate("/login")}}>LogIn</DropdownItem>}  
+            
           </DropdownMenu>
         </Dropdown>
       </Collapse>

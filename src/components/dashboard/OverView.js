@@ -12,8 +12,7 @@ const OverView = () => {
 
     const {memclData,loading} =useContext(DataContext);
     const {expenses,exploading} = useContext(ExpensesContext);
-   console.log(expenses);
-   
+ 
     const ttlclAmount = !loading && memclData?.length > 0
     ? memclData.reduce((total, item) => {
         const amount = parseInt(item.amount);
@@ -41,7 +40,7 @@ const OverView = () => {
                                 <div className="card-body">
                                     <div className="row">
                                         <div className="col">
-                                            <span className="h6 font-semibold text-muted text-sm d-block mb-2">Total Members</span>
+                                            <span className="h6 font-semibold text-muted text-sm d-block mb-2">Total Members Paid</span>
                                             <span className="h3 font-bold mb-0">{!loading ? memclData.length:0}</span>
                                         </div>
                                         <div className="col-auto">

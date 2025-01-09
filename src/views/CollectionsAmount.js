@@ -62,10 +62,10 @@ const CollectionsAmount = () => {
   return (
     !loading ?(
       <div className="">
-
+        <h4 className='text-center my-3'>All Collection Amount</h4>
         <div className="row my-3">
           <div className="col-md-6 my-2" >
-            <h4 className='text-center my-3 '>All Collection Amount</h4>
+        
             <input
               type="text"
               className="form-control"
@@ -74,7 +74,7 @@ const CollectionsAmount = () => {
               onChange={handleSearch}
             />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-6 my-2">
             <select
               className="form-control"
               value={selectedCategory}

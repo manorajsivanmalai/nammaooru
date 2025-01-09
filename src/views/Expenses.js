@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import '../assets/scss/adduser.css';
 import { useState } from "react";
 import { ExpensesContext } from "../contextapi/expensesContextApi";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit ,FaSave} from "react-icons/fa";
 import { IoMdArrowDroprightCircle, IoMdArrowDropleftCircle } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 const Expenses = () => {
@@ -11,6 +11,7 @@ const Expenses = () => {
         reason: '',
         amount: 0
     });
+    const [addLoad,setAddLoad]=useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const totalPages = exploading ? Math.ceil(expenses.length / itemsPerPage) : 0;
@@ -35,10 +36,9 @@ const Expenses = () => {
 
     const handlSubmitExpenses =async (e) => {
         e.preventDefault();
-        console.log(formdata);
-        
+        setAddLoad(false);
         try {
-            const response = await fetch("http://localhost:8888/api/addexpense", {
+            const response = await fetch("/api/addexpense", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json", 
@@ -54,10 +54,10 @@ const Expenses = () => {
             setExpenses((prev)=>{
              return [...prev,result]
             })
-           
+            setAddLoad(true);
           } catch (error) {
             console.error("Error:", error);
-           
+            setAddLoad(true);
           }
           
         setFormdata({
@@ -91,7 +91,7 @@ const Expenses = () => {
                 </div>
 
                 <div>
-                    <button type="submit">submit</button>
+                    <button type="submit" disabled={!addLoad} style={{backgroundColor:!addLoad?"#ada1a1":"red"}}>{!addLoad?<span>Saving...</span>:<span>Save <FaSave/></span>}</button>
                 </div>
             </form>
 

@@ -26,3 +26,45 @@ exports.getMembers = async (req, res) => {
     res.status(500).json({ error: 'Failed to retrieve expenses' });
   }
 };
+
+exports.updateMember = async (req, res) => {
+  const { id } = req.params;
+  const { name, amount,category } = req.body;
+ 
+  try {
+    const [updated] = await Member.update(
+      { name, amount,category },
+      { where: { id } }
+    );
+
+    if (updated) {
+      const updatedMember = await Member.findOne({ where: { id } });
+      return res.status(200).json(updatedMember); 
+    }
+
+    throw new Error('Member not found');
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to update Member' });
+  }
+};
+
+
+exports.deleteMember = async (req, res) => {
+  const { id } = req.params; 
+
+  try {
+    const deleted = await Member.destroy({
+      where: { id }
+    });
+
+    if (deleted) {
+      return res.status(200).json({ message: 'Member deleted successfully' });
+    }
+
+    throw new Error('Member not found');
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to delete Member' });
+  }
+};

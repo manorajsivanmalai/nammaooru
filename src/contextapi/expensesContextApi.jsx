@@ -11,7 +11,7 @@ export const ExpensesProvider = ({ children }) => {
 
   useEffect(() => {
     // Fetch data from API when the component mounts
-    fetch("http://localhost:8888/api/getexpenses")
+    fetch("/api/getexpenses")
       .then((res) => res.json())
       .then((data) => {
         setExpenses(data); 

@@ -1,7 +1,24 @@
 import { Card, CardBody, CardSubtitle, CardTitle } from "reactstrap";
 import Chart from "react-apexcharts";
-
+import { ExpensesContext } from "../../contextapi/expensesContextApi";
+import { DataContext } from "../../contextapi/memberContextApi";
+import { useContext } from "react";
 const SalesChart = () => {
+  const {memclData, loading,} =useContext(DataContext);
+  const {expenses,exploading,} =useContext(ExpensesContext);
+  const ttlclAmount = !loading && memclData?.length > 0
+  ? memclData.reduce((total, item) => {
+      const amount = parseInt(item.amount);
+      return total + (Number.isNaN(amount) ? 0 : amount); 
+    }, 0)
+  : 0;
+
+const ttlExpense = !exploading && expenses?.length > 0
+  ? expenses.reduce((total, item) => {
+      const amount = parseInt(item.amount);
+      return total + (Number.isNaN(amount) ? 0 : amount); 
+    }, 0)
+  : 0;
   const options = {
     chart: {
       toolbar: {
@@ -30,15 +47,7 @@ const SalesChart = () => {
     colors: ["#0d6efd", "#009efb", "#6771dc"],
     xaxis: {
       categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
+        2025,2026,2027,2028,2029,2030
       ],
     },
     responsive: [
@@ -57,22 +66,20 @@ const SalesChart = () => {
   };
   const series = [
     {
-      name: "2020",
-      data: [20, 40, 50, 30, 40, 50, 30, 30, 40],
+      name: "totalCollection",
+      data: [ttlclAmount],
     },
     {
-      name: "2022",
-      data: [10, 20, 40, 60, 20, 40, 60, 60, 20],
+      name: "Expenses",
+      data: [ttlExpense],
     },
   ];
 
   return (
     <Card>
       <CardBody>
-        <CardTitle tag="h5">Sales Summary</CardTitle>
-        <CardSubtitle className="text-muted" tag="h6">
-          Yearly Sales Report
-        </CardSubtitle>
+        <CardTitle tag="h5">Years Collections Summary</CardTitle>
+    
         <Chart options={options} series={series} type="bar" height="379" />
       </CardBody>
     </Card>

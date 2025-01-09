@@ -29,7 +29,7 @@ const ShowExpenses = () => {
     (item) =>
     (item.reason.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.amount.toString().includes(searchTerm) ||
-      item.date.includes(searchTerm) ||
+      item.createdAt.includes(searchTerm) ||
       item.id.toString().includes(searchTerm))
   );
 
@@ -58,7 +58,7 @@ const ShowExpenses = () => {
     !exploading ? (<div className="">
 
       <div className="row my-3">
-        <div className="col-md-6 my-2" >
+        <div className="col-md-12 my-2" >
           <h4 className='text-center my-3 '>All Expenses</h4>
           <input
             type="text"

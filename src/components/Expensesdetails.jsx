@@ -7,6 +7,8 @@ import "../assets/scss/adduser.css";
 
 const ExpensesDetails = () => {
   const { setExpenses } = useContext(ExpensesContext);
+  const [saveLoad ,setSaveLoading]=useState(true)
+  const [delLoading,setdelLoading]=useState(true)
   const location = useLocation();
   const { exp } = location.state || {};
   const [expdetail, setExpdetail] = useState(exp || {});
@@ -16,18 +18,56 @@ const ExpensesDetails = () => {
     setExpdetail((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleClick = () => {
-    setExpenses((prev) =>
-      prev.map((item) => (item.id === exp.id ? { ...item, ...expdetail } : item))
-    );
+  const handleSave = async () => {
+    setSaveLoading(false);
+    try {
+      const response = await fetch(`/api/expense/${exp.id}`, {
+        method: "PUT",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(expdetail), 
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to update expense');
+      }
+  
+      const updatedExpense = await response.json();
+      setSaveLoading(true)
+      setExpenses((prev) =>
+        prev.map((item) => (item.id === updatedExpense.id ? updatedExpense : item))
+      );
+      navigate("/showexpenses");
+    } catch (error) {
+      setSaveLoading(true)
+      console.error("Error updating expense:", error);
+    }
   };
+  
 
-  const handleDelete = () => {
-    setExpenses((prev) => prev.filter((item) => item.id !== exp.id));
-    // Optionally redirect or show feedback
-     
-     navigate("/expenses");
+  const handleDelete = async () => {
+    setdelLoading(false);
+    try {
+
+      const response = await fetch(`/api/expense/${exp.id}`, {
+        method: "DELETE",
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to delete expense');
+      }
+  
+      setExpenses((prev) => prev.filter((item) => item.id !== exp.id));
+      setdelLoading(true)
+      navigate("/expenses");
+  
+    } catch (error) {
+      setdelLoading(true)
+      console.error("Error deleting expense:", error);
+    }
   };
+  
 
   return (
     <div className="expense-detail">
@@ -55,14 +95,10 @@ const ExpensesDetails = () => {
             onChange={handlechange}
           />
         </div>
-        <div className="save">
-          <button onClick={handleClick}>
-            Save <FaSave />
-          </button>
-          <button onClick={handleDelete}>
-            Delete <MdDelete />
-          </button>
-        </div>
+        <div className='save'>
+                            <button onClick={(e)=>handleSave(e)} disabled={!saveLoad ||!delLoading} style={{background:!saveLoad ||!delLoading?"#e5bdbd":"red"}}>{!saveLoad?"Saving...":<>Save <FaSave /></>  }</button>
+                            <button onClick={(e)=>handleDelete(e) } disabled={!saveLoad ||!delLoading} style={{background:!saveLoad ||!delLoading?"#e5bdbd":"red"}}>{!delLoading?"Deleting...":<>Delete <MdDelete /></>  } </button>
+           </div>
       </div>
     </div>
   );

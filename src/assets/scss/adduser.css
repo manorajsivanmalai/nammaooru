@@ -27,6 +27,10 @@ form{
     display: flex;
     justify-content: center;
 }
+.sub-but button svg{
+  margin-bottom: 4px;
+  margin-left: 4px;
+}
 .sort-options{
     display: flex;
     justify-content: space-between;

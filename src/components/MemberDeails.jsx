@@ -1,39 +1,76 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import "../assets/scss/adduser.css";
 import { DataContext } from '../contextapi/memberContextApi';
 import { FaSave } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 const MemberDetails = () => {
     const location = useLocation();
+    const [saveLoad,setSaveLoading]=useState(true);
+    const [delLoading,setDelLoading]=useState(true);
     const { member } = location.state || {}; 
     const { setMemclData} = useContext(DataContext);
     const [mem,setMem]=useState(member);
-
+    const navigate=useNavigate();
     const handleChange = (e) => {
         const { name, value } = e.target; 
-        setMemclData((prev) => {
-          return  prev.map((cur,inx)=>{
-                if (cur.id === mem.id) {
-                    return { ...cur, [name]: value }; 
-                }else {
-                    return cur; 
-                }
-            })
-           
-        });
+
         setMem((prev)=>{
             return{...prev,[name]:value};
         })
     };
     
-    const handleClick=(e)=>{
-        
-    }
-
-  const handleDelete=(e)=>{
-
-    }
+    const handleSave = async () => {
+        setSaveLoading(false)
+        try {
+          // Update the expense on the server
+          const response = await fetch(`/api/member/${mem.id}`, {
+            method: "PUT",
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(mem), // Send updated details
+          });
+      
+          if (!response.ok) {
+            throw new Error('Failed to update expense');
+          }
+      
+          const updatedMember = await response.json();
+      
+          setMemclData((prev) =>
+            prev.map((item) => (item.id === updatedMember.id ? updatedMember : item))
+          );
+          navigate("/collectionAmount");
+          setSaveLoading(true)
+        } catch (error) {
+          console.error("Error updating expense:", error);
+          setSaveLoading(true)
+        }
+      };
+      
+      const handleDelete = async () => {
+      
+        setDelLoading(false);
+        try {
+    
+          const response = await fetch(`/api/member/${mem.id}`, {
+            method: "DELETE",
+          });
+      
+          if (!response.ok) {
+            throw new Error('Failed to delete expense');
+          }
+      
+          setMemclData((prev) => prev.filter((item) => item.id !== mem.id));
+          setDelLoading(true)
+          navigate("/addmembers");
+      
+        } catch (error) {
+            setDelLoading(true)
+          console.error("Error deleting expense:", error);
+        }
+      };
 
     return (
         <div className="member-details">
@@ -102,8 +139,8 @@ const MemberDetails = () => {
                         ></textarea>
                     </div>
                   <div className='save'>
-                     <button onClick={(e)=>handleClick(e)} >Save  <FaSave /> </button>
-                     <button onClick={(e)=>handleDelete(e)} >Delete <MdDelete /></button>
+                     <button onClick={(e)=>handleSave(e)} disabled={!saveLoad ||!delLoading} style={{background:!saveLoad ||!delLoading?"#e5bdbd":"red"}}>{!saveLoad?"Saving...":<>Save <FaSave /></>  }</button>
+                     <button onClick={(e)=>handleDelete(e) } disabled={!saveLoad ||!delLoading} style={{background:!saveLoad ||!delLoading?"#e5bdbd":"red"}}>{!delLoading?"Deleting...":<>Delete <MdDelete /></>  } </button>
                   </div>
                 </div>
             ) : (

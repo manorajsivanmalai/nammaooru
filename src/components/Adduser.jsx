@@ -2,10 +2,11 @@ import React, { useContext, useState } from 'react';
 import '../assets/scss/adduser.css';
 import Membertable from './Membertable';
 import { DataContext } from '../contextapi/memberContextApi';
+import { IoPersonAddSharp } from "react-icons/io5";
 const AddUser = () => {
 
  const { setMemclData }=useContext(DataContext);
-
+ const [addLoad,setAddLoad]=useState(true);
 const [formData,setFormdata]=useState({
     name:'',
     amount:0,
@@ -14,10 +15,10 @@ const [formData,setFormdata]=useState({
 
 const handleFormSubmission =async (e) => {
         e.preventDefault();
-  
+        setAddLoad(false)
 
     try {
-      const response = await fetch("http://localhost:8888/api/createmember", {
+      const response = await fetch("/api/createmember", {
         method: "POST",
         headers: {
           "Content-Type": "application/json", 
@@ -33,10 +34,11 @@ const handleFormSubmission =async (e) => {
     setMemclData((prev)=>{
        return [...prev,result]
       })
+      setAddLoad(true)
      
     } catch (error) {
       console.error("Error:", error);
-     
+      setAddLoad(true)
     }
 
     setFormdata({
@@ -79,7 +81,7 @@ const handleFormSubmission =async (e) => {
                     </select>
                  </div>
                 <div className='sub-but'>
-                    <button  type="submit" disabled={formData.category === 'category'} style={{backgroundColor:formData.category === 'category'?"#a69c9c":"red"}}>Submit</button>
+                    <button  type="submit" disabled={formData.category === 'category' || !addLoad}  style={{backgroundColor:formData.category === 'category' || !addLoad ? "#a69c9c":"red"}}>{!addLoad?<span>Adding...</span>:<span>Add <IoPersonAddSharp /></span>}</button>
                 </div>
             </form>
 
