@@ -4,8 +4,7 @@ const Expenses=require("../../model/Expensestable")
 const AppDataSource = new DataSource({
   type: 'postgres',
   url: process.env.POSTGRES_URL,
-  synchronize: true,  
-  
+  synchronize: false,   
   logging: false,
   entities: [Members,Expenses],  
 });
