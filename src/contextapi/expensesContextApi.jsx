@@ -12,7 +12,7 @@ export const ExpensesProvider = ({ children }) => {
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
-        const response = await fetch("https://sivanmalairockers.netlify.app/api/getexpenses");
+        const response = await fetch("/api/getexpenses");
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

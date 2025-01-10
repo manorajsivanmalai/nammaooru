@@ -5,7 +5,7 @@ export const DataContext = createContext();
 
 
 export const DataProvider = ({ children }) => {
-  const [memclData, setMemclData] = useState(null); 
+  const [memclData, setMemclData] = useState([]); 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -17,10 +17,9 @@ export const DataProvider = ({ children }) => {
           throw new Error("Failed to fetch data");
         }
         const memberData = await response.json();
-        console.log(memberData);
-        
         setMemclData(memberData);
       } catch (error) {
+        console.log(error);
         setError(error.message); 
       } finally {
         setLoading(false); 
