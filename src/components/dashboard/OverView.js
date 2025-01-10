@@ -41,7 +41,7 @@ const OverView = () => {
                                     <div className="row">
                                         <div className="col">
                                             <span className="h6 font-semibold text-muted text-sm d-block mb-2">Total Members Paid</span>
-                                            <span className="h3 font-bold mb-0">{!loading ? memclData.length:0}</span>
+                                            <span className="h3 font-bold mb-0">{!loading && memclData?.length > 0? memclData?.length:0}</span>
                                         </div>
                                         <div className="col-auto">
                                             <div className="icon icon-shape  text-lg rounded-circle">
