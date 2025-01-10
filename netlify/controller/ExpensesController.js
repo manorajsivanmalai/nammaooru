@@ -6,7 +6,6 @@ async function ensureInitializedAndExecute(fn) {
     await initializeDataSource();
   }
 
-  // Execute the provided database operation function
   return fn();
 }
 exports.createExpenses = async (req, res) => {
@@ -64,9 +63,10 @@ await ensureInitializedAndExecute(async () => {
       expense.updatedAt=new Date();
       const updatedExpense = await expenseRepository.save(expense);
       return res.status(200).json(updatedExpense);
+    }else{
+      res.status(404).json({ error: 'Expense not found' });
     }
   })
-    res.status(404).json({ error: 'Expense not found' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to update Expense' });
@@ -86,9 +86,10 @@ await ensureInitializedAndExecute(async () => {
 
     if (deleteResult.affected > 0) {
       return res.status(200).json({ message: 'Expense deleted successfully' });
+    }else{
+      res.status(404).json({ error: 'Expense not found' });
     }
   })
-    res.status(404).json({ error: 'Expense not found' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to delete Expense' });

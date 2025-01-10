@@ -67,9 +67,11 @@ exports.updateMember = async (req, res) => {
       member.updatedAt=new Date();
       const updatedMember = await memberRepository.save(member);
       return res.status(200).json(updatedMember);
+    }else{
+      res.status(404).json({ error: 'Member not found' });
     }
   })
-    res.status(404).json({ error: 'Member not found' });
+   
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to update Member' });
@@ -89,9 +91,10 @@ exports.deleteMember = async (req, res) => {
 
     if (deleteResult.affected > 0) {
       return res.status(200).json({ message: 'Member deleted successfully' });
+    }else{
+      res.status(404).json({ error: 'Member not found' });
     }
   })
-    res.status(404).json({ error: 'Member not found' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to delete Member' });
