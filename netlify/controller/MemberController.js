@@ -1,6 +1,6 @@
-const { AppDataSource } = require('../model/dbconnect/data-source');
-const Members = require('../model/Membertable');  // Ensure correct path
 
+const Members = require('../model/Membertable');
+const { AppDataSource } = require('../model/dbconnect/data-source');
 
 exports.createMember = async (req, res) => {
   try {
