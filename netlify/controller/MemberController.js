@@ -1,9 +1,19 @@
 
 const Members = require('../model/Membertable');
-const { AppDataSource } = require('../model/dbconnect/data-source');
+const { AppDataSource,initializeDataSource } = require('../model/dbconnect/data-source');
+async function ensureInitializedAndExecute(fn) {
+  // Ensure the data source is initialized
+  if (!AppDataSource.isInitialized) {
+    await initializeDataSource();
+  }
 
+  // Execute the provided database operation function
+  return fn();
+}
 exports.createMember = async (req, res) => {
   try {
+    await ensureInitializedAndExecute(async () => {
+
     const { name, amount, category } = req.body;
     const memberRepository = AppDataSource.getRepository(Members);
 
@@ -16,7 +26,8 @@ exports.createMember = async (req, res) => {
     });
 
     const savedMember = await memberRepository.save(newMember);
-    res.status(201).json(savedMember);  // Return created member
+    res.status(201).json(savedMember);  
+  })// Return created member
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to create Member' });
@@ -26,9 +37,12 @@ exports.createMember = async (req, res) => {
 // Get all Members
 exports.getMembers = async (req, res) => {
   try {
+    await ensureInitializedAndExecute(async () => {
+
     const memberRepository = AppDataSource.getRepository(Members);
     const members = await memberRepository.find();
-    res.status(200).json(members);  // Return all members
+    res.status(200).json(members); 
+    })
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to retrieve members' });
@@ -41,6 +55,8 @@ exports.updateMember = async (req, res) => {
   const { name, amount, category } = req.body;
 
   try {
+    await ensureInitializedAndExecute(async () => {
+
     const memberRepository = AppDataSource.getRepository(Members);
     const member = await memberRepository.findOne({ where: { id } });
 
@@ -52,7 +68,7 @@ exports.updateMember = async (req, res) => {
       const updatedMember = await memberRepository.save(member);
       return res.status(200).json(updatedMember);
     }
-
+  })
     res.status(404).json({ error: 'Member not found' });
   } catch (error) {
     console.error(error);
@@ -65,6 +81,8 @@ exports.deleteMember = async (req, res) => {
   const { id } = req.params;
 
   try {
+    await ensureInitializedAndExecute(async () => {
+
     const memberRepository = AppDataSource.getRepository(Members);
 
     const deleteResult = await memberRepository.delete(id);
@@ -72,7 +90,7 @@ exports.deleteMember = async (req, res) => {
     if (deleteResult.affected > 0) {
       return res.status(200).json({ message: 'Member deleted successfully' });
     }
-
+  })
     res.status(404).json({ error: 'Member not found' });
   } catch (error) {
     console.error(error);
