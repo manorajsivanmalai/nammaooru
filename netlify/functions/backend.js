@@ -12,13 +12,13 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const sequelize = new Sequelize("postgres://default:oQm2pSXI5ulY@ep-patient-rain-a4vsiaah-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require", {
-    dialect: 'postgres',
-    logging: false,
-  });
-  
+
   app.get('/', async (req, res) => {
     try {
+        const sequelize = new Sequelize('verceldb', 'default', 'oQm2pSXI5ulY', {
+        host: 'ep-patient-rain-a4vsiaah-pooler.us-east-1.aws.neon.tech',
+        dialect: 'postgres'
+        });
       await sequelize.authenticate();
       res.status(200).send('Database connected successfully');
     } catch (error) {
@@ -27,10 +27,7 @@ const sequelize = new Sequelize("postgres://default:oQm2pSXI5ulY@ep-patient-rain
     }
   });
 // Option 3: Passing parameters separately (other dialects)
-// const sequelize = new Sequelize('database', 'username', 'password', {
-//   host: 'localhost',
-//   dialect: 'postgres'
-// });
+
 
 
 
