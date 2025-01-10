@@ -1,72 +1,79 @@
-const Expenses = require('../model/Expensestable');
+const { AppDataSource } = require('../model/dbconnect/data-source');
+const Expenses = require('../model/Expensestable');  // Ensure correct path
 
 
 exports.createExpenses = async (req, res) => {
   try {
     const { reason, amount } = req.body;
-    console.log(reason ,amount);
-    
-    const expense = await Expenses.create({
+    const expenseRepository = AppDataSource.getRepository(Expenses);
+
+    const newExpense = expenseRepository.create({
       reason,
       amount,
+      createdAt: new Date(),  
+      updatedAt: new Date(),
     });
-    res.status(201).json(expense); 
+
+    const saveExpense = await expenseRepository.save(newExpense);
+    res.status(201).json(saveExpense);  // Return created member
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to create Expenses' });
+    res.status(500).json({ error: 'Failed to create Member' });
   }
 };
 
-
+// Get all Expenses
 exports.getExpenses = async (req, res) => {
   try {
-    const expenses = await Expenses.findAll();
-    res.status(200).json(expenses); 
+    const expenseRepository = AppDataSource.getRepository(Expenses);
+    const expenses = await expenseRepository.find();
+    res.status(200).json(expenses);  
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to retrieve expenses' });
+    res.status(500).json({ error: 'Failed to retrieve Expenses' });
   }
 };
 
+// Update a Member
 exports.updateExpenses = async (req, res) => {
   const { id } = req.params;
   const { reason, amount } = req.body;
- console.log(id,reason);
- 
-  try {
-    const [updated] = await Expenses.update(
-      { reason, amount },
-      { where: { id } }
-    );
 
-    if (updated) {
-      const updatedExpense = await Expenses.findOne({ where: { id } });
-      return res.status(200).json(updatedExpense); 
+  try {
+    const expenseRepository = AppDataSource.getRepository(Expenses);
+    const expense = await expenseRepository.findOne({ where: { id } });
+
+    if (expense) {
+      expense.reason = reason;
+      expense.amount = amount;
+      expense.updatedAt=new Date();
+      const updatedExpense = await expenseRepository.save(expense);
+      return res.status(200).json(updatedExpense);
     }
 
-    throw new Error('Expense not found');
+    res.status(404).json({ error: 'Expense not found' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to update expense' });
+    res.status(500).json({ error: 'Failed to update Expense' });
   }
 };
 
-
+// Delete a Member
 exports.deleteExpenses = async (req, res) => {
-  const { id } = req.params; 
+  const { id } = req.params;
 
   try {
-    const deleted = await Expenses.destroy({
-      where: { id }
-    });
+    const expenseRepository = AppDataSource.getRepository(Expenses);
 
-    if (deleted) {
+    const deleteResult = await expenseRepository.delete(id);
+
+    if (deleteResult.affected > 0) {
       return res.status(200).json({ message: 'Expense deleted successfully' });
     }
 
-    throw new Error('Expense not found');
+    res.status(404).json({ error: 'Expense not found' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to delete expense' });
+    res.status(500).json({ error: 'Failed to delete Expense' });
   }
 };

@@ -1,7 +1,7 @@
 const { AppDataSource } = require('../model/dbconnect/data-source');
 const Members = require('../model/Membertable');  // Ensure correct path
 
-// Create a new Member
+
 exports.createMember = async (req, res) => {
   try {
     const { name, amount, category } = req.body;
@@ -48,7 +48,7 @@ exports.updateMember = async (req, res) => {
       member.name = name;
       member.amount = amount;
       member.category = category;
-
+      member.updatedAt=new Date();
       const updatedMember = await memberRepository.save(member);
       return res.status(200).json(updatedMember);
     }
