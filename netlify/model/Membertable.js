@@ -1,43 +1,34 @@
-require('dotenv').config();
-const { Sequelize, DataTypes } = require('sequelize');
+const { EntitySchema } = require('typeorm');
 
-// Initialize the Sequelize connection using pg as the dialect
-const sequelize = new Sequelize(process.env.POSTGRES_URL, {
-  dialect: 'postgres',
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false, // For self-signed certificates or specific configurations
+const Members = new EntitySchema({
+  name: 'Members',
+  tableName: 'Members',
+  columns: {
+    id: {
+      type: Number,
+      primary: true,
+      generated: true,
+    },
+    name: {
+      type: String,
+    },
+    amount: {
+      type: Number,
+    },
+    category: {
+      type: String,
+    },
+    createdAt: {
+      type: 'timestamp',
+      default: () => 'CURRENT_TIMESTAMP', 
+      nullable: false,
+    },
+    updatedAt: {
+      type: 'timestamp',
+      default: () => 'CURRENT_TIMESTAMP',
+      nullable: false,
     },
   },
-  logging: false, // Disable logging for clean output
 });
 
-// Define the model
-const Member = sequelize.define('Member', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true, // Automatically generate the id
-  },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  amount: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
-  },
-  category: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    defaultValue: 'category', // Default value for category
-  },
-});
-
-// Sync the model with the database
-sequelize.sync()
-  .then(() => console.log('Member table has been created!'))
-  .catch((error) => console.error('Error syncing the model:', error));
-
-module.exports = Member;
+module.exports = Members;

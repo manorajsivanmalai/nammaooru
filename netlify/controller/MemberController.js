@@ -1,15 +1,22 @@
- const Member = require('../model/Membertable');
+const { AppDataSource } = require('../model/dbconnect/data-source');
+const Members = require('../model/Membertable');  // Ensure correct path
 
 // Create a new Member
 exports.createMember = async (req, res) => {
   try {
     const { name, amount, category } = req.body;
-    const member = await Member.create({
+    const memberRepository = AppDataSource.getRepository(Members);
+
+    const newMember = memberRepository.create({
       name,
       amount,
       category,
+      createdAt: new Date(),  
+      updatedAt: new Date(),
     });
-    res.status(201).json(member); // Send the created Member back as response
+
+    const savedMember = await memberRepository.save(newMember);
+    res.status(201).json(savedMember);  // Return created member
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to create Member' });
@@ -19,50 +26,54 @@ exports.createMember = async (req, res) => {
 // Get all Members
 exports.getMembers = async (req, res) => {
   try {
-    const members = await Member.findAll();
-    res.status(200).json(members); // Send the expenses back as response
+    const memberRepository = AppDataSource.getRepository(Members);
+    const members = await memberRepository.find();
+    res.status(200).json(members);  // Return all members
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to retrieve expenses' });
+    res.status(500).json({ error: 'Failed to retrieve members' });
   }
 };
 
+// Update a Member
 exports.updateMember = async (req, res) => {
   const { id } = req.params;
-  const { name, amount,category } = req.body;
- 
-  try {
-    const [updated] = await Member.update(
-      { name, amount,category },
-      { where: { id } }
-    );
+  const { name, amount, category } = req.body;
 
-    if (updated) {
-      const updatedMember = await Member.findOne({ where: { id } });
-      return res.status(200).json(updatedMember); 
+  try {
+    const memberRepository = AppDataSource.getRepository(Members);
+    const member = await memberRepository.findOne({ where: { id } });
+
+    if (member) {
+      member.name = name;
+      member.amount = amount;
+      member.category = category;
+
+      const updatedMember = await memberRepository.save(member);
+      return res.status(200).json(updatedMember);
     }
 
-    throw new Error('Member not found');
+    res.status(404).json({ error: 'Member not found' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to update Member' });
   }
 };
 
-
+// Delete a Member
 exports.deleteMember = async (req, res) => {
-  const { id } = req.params; 
+  const { id } = req.params;
 
   try {
-    const deleted = await Member.destroy({
-      where: { id }
-    });
+    const memberRepository = AppDataSource.getRepository(Members);
 
-    if (deleted) {
+    const deleteResult = await memberRepository.delete(id);
+
+    if (deleteResult.affected > 0) {
       return res.status(200).json({ message: 'Member deleted successfully' });
     }
 
-    throw new Error('Member not found');
+    res.status(404).json({ error: 'Member not found' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to delete Member' });
