@@ -8,22 +8,25 @@ import bg1 from "../assets/images/bg/bg1.jpg";
 import bg2 from "../assets/images/bg/bg2.jpg";
 import bg3 from "../assets/images/bg/bg3.jpg";
 import bg4 from "../assets/images/bg/bg4.jpg";
+import danceimg from "../assets/images/bg/dance-img.jpg"
 import OverView from "../components/dashboard/OverView";
-
+import happy from "../assets/images/bg/happy-pongal.jpg"
+import CloundImg from "../components/cloudImg";
+import compitationimg from "../assets/images/bg/compitation-img.jpg"
 const BlogData = [
   {
-    image: bg1,
-    title: "This is simple blog",
-    subtitle: "2 comments, 1 Like",
-    description:"This is a wider card with supporting text below as a natural lead-in to additional content.",
+    image: compitationimg,
+    title: "Pongal Day 1",
+    subtitle: "Games Competition",
+    description:"Celebrate Pongal with a Thrilling Game Competition by Sivanmalai Rockers!..",
     btnbg: "primary",
   },
   {
-    image: bg2,
-    title: "Lets be simple blog",
-    subtitle: "2 comments, 1 Like",
+    image: danceimg,
+    title: "Pongal day 2",
+    subtitle: "Dance Program",
     description:
-      "This is a wider card with supporting text below as a natural lead-in to additional content.",
+      "Step Into the Rhythm of Pongal with Sivanmalai Rockers' Dance Performance!..",
     btnbg: "primary",
   },
   {
@@ -51,6 +54,9 @@ const Starter = () => {
 
       {/***Sales & Feed***/}
       <Row>
+      {/* <Col sm="6" lg="12" xl="12" xxl="12">
+      <CloundImg />
+        </Col> */}
       <Col sm="6" lg="12" xl="12" xxl="12">
           <OverView />
         </Col>

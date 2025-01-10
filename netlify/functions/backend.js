@@ -4,11 +4,10 @@ const cors = require('cors');
 const router = express.Router();
 require('dotenv').config();
 const serverless = require('serverless-http');
-  const { createMember, getMembers,updateMember,deleteMember } = require('../controller/MemberController');
- const {createExpenses,getExpenses,updateExpenses, deleteExpenses} = require('../controller/ExpensesController');
- const {userRouter} =require("../controller/UserController");
- const { AppDataSource } = require('../model/dbconnect/data-source');
- const Members = require('../model/Membertable');
+const { createMember, getMembers,updateMember,deleteMember } = require('../controller/MemberController');
+const {createExpenses,getExpenses,updateExpenses, deleteExpenses} = require('../controller/ExpensesController');
+const {userRouter} =require("../controller/UserController");
+
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -17,8 +16,6 @@ app.use(cors());
   router.get('/', async (req, res) => {  
    res.json("server is running");
   });
-
-
 
 
 

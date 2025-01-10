@@ -10,18 +10,23 @@ export const ExpensesProvider = ({ children }) => {
   const [error, setError] = useState(null); 
 
   useEffect(() => {
-    // Fetch data from API when the component mounts
-    fetch("/api/getexpenses")
-      .then((res) => res.json())
-      .then((data) => {
-        setExpenses(data); 
-        setExploading(false); 
-      })
-      .catch((error) => {
+    const fetchExpenses = async () => {
+      try {
+        const response = await fetch("/api/getexpenses");
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setExpenses(data);
+      } catch (error) {
         console.error("Error fetching expenses:", error);
-        setError("An error occurred while fetching expenses"); 
-        setExploading(false); 
-      });
+        setError("An error occurred while fetching expenses");
+      } finally {
+        setExploading(false);
+      }
+    };
+
+    fetchExpenses();
   }, []);
 
   return (
