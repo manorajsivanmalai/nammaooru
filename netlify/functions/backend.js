@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(cors());
 
 
-  app.get('/', async (req, res) => {
+  router.get('/', async (req, res) => {
     try {
         const sequelize = new Sequelize('verceldb', 'default', 'oQm2pSXI5ulY', {
         host: 'ep-patient-rain-a4vsiaah-pooler.us-east-1.aws.neon.tech',
