@@ -2,16 +2,11 @@ import { Col, Row } from "reactstrap";
 import SalesChart from "../components/dashboard/SalesChart";
 import Feeds from "../components/dashboard/Feeds";
 import ProjectTables from "../components/dashboard/ProjectTable";
-
 import Blog from "../components/dashboard/Blog";
-import bg1 from "../assets/images/bg/bg1.jpg";
-import bg2 from "../assets/images/bg/bg2.jpg";
 import bg3 from "../assets/images/bg/bg3.jpg";
 import bg4 from "../assets/images/bg/bg4.jpg";
 import danceimg from "../assets/images/bg/dance-img.jpg"
 import OverView from "../components/dashboard/OverView";
-import happy from "../assets/images/bg/happy-pongal.jpg"
-import CloundImg from "../components/cloudImg";
 import compitationimg from "../assets/images/bg/compitation-img.jpg"
 const BlogData = [
   {
@@ -54,18 +49,16 @@ const Starter = () => {
 
       {/***Sales & Feed***/}
       <Row>
-      {/* <Col sm="6" lg="12" xl="12" xxl="12">
-      <CloundImg />
-        </Col> */}
+   
       <Col sm="6" lg="12" xl="12" xxl="12">
           <OverView />
         </Col>
         <Col sm="6" lg="6" xl="7" xxl="8">
           <SalesChart />
         </Col>
-        <Col sm="6" lg="6" xl="5" xxl="4">
+        {/* <Col sm="6" lg="6" xl="5" xxl="4">
           <Feeds />
-        </Col>
+        </Col> */}
       </Row>
       {/***Table ***/}
       <Row>

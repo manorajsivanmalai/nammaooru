@@ -18,6 +18,14 @@ const Members = new EntitySchema({
     category: {
       type: String,
     },
+    phone: {
+      type: String,
+      nullable: true,
+    },
+    role: {
+      type: String,
+      nullable: true,
+    },
     createdAt: {
       type: 'timestamp',
       default: () => 'CURRENT_TIMESTAMP', 

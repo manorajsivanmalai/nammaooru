@@ -8,7 +8,6 @@ const serverless = require('serverless-http');
 const { createMember, getMembers,updateMember,deleteMember } = require('../controller/MemberController');
 const {createExpenses,getExpenses,updateExpenses, deleteExpenses} = require('../controller/ExpensesController');
 const {userRouter} =require("../controller/UserController");
-
 const app = express();
 app.use(express.json());
 app.use(cors());

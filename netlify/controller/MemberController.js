@@ -52,7 +52,7 @@ exports.getMembers = async (req, res) => {
 // Update a Member
 exports.updateMember = async (req, res) => {
   const { id } = req.params;
-  const { name, amount, category } = req.body;
+  const { name, amount, category,phone,role } = req.body;
 
   try {
     await ensureInitializedAndExecute(async () => {
@@ -64,6 +64,8 @@ exports.updateMember = async (req, res) => {
       member.name = name;
       member.amount = amount;
       member.category = category;
+      member.phone=phone;
+      member.role=role;
       member.updatedAt=new Date();
       const updatedMember = await memberRepository.save(member);
       return res.status(200).json(updatedMember);

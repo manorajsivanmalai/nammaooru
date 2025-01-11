@@ -1,51 +1,20 @@
 import { Card, CardBody, CardTitle, CardSubtitle, Table } from "reactstrap";
-import user1 from "../../assets/images/users/user1.jpg";
-import user2 from "../../assets/images/users/user2.jpg";
-import user3 from "../../assets/images/users/user3.jpg";
+// import user1 from "../../assets/images/users/user1.jpg";
+// import user2 from "../../assets/images/users/user2.jpg";
+// import user3 from "../../assets/images/users/user3.jpg";
 import user4 from "../../assets/images/users/user4.jpg";
-import user5 from "../../assets/images/users/user5.jpg";
+// import user5 from "../../assets/images/users/user5.jpg";
+import { DataContext } from "../../contextapi/memberContextApi";
+import { useContext } from "react";
 
-const tableData = [
-  {
-    avatar: user2,
-    name: "srithar",
-    mobileno: "79390390930",
-    work: "Finance",
 
-  },
-  {
-    avatar: user2,
-    name: "Deppan",
-    mobileno: "788985498954",
-    work: "Event Coordinator",
- 
-  },
-  {
-    avatar: user3,
-    name: "praksh",
-    mobileno: "67848489949",
-    work: "Elite React",
- 
-  },
-  {
-    avatar: user4,
-    name: "naveen",
-    mobileno: "8948994390434",
-    work: "Flexy React",
-
-  },
-  {
-    avatar: user5,
-    name: "nandha",
-    mobileno: "8898990590",
-    work: "Ample React",
-
-  },
-];
 
 const ProjectTables = () => {
+ const {memclData,loading}=useContext(DataContext);
+ const manager=memclData?.filter((pre)=>pre.role!=null);
+ 
   return (
-    <div>
+   !loading ? <div>
       <Card>
         <CardBody>
           <CardTitle tag="h5"> Program Administrators</CardTitle>
@@ -62,24 +31,24 @@ const ProjectTables = () => {
               </tr>
             </thead>
             <tbody>
-              {tableData.map((tdata, index) => (
+              {manager?.map((tdata, index) => (
                 <tr key={index} className="border-top">
                   <td>
                     <div className="d-flex align-items-center p-2">
                       <img
-                        src={tdata.avatar}
+                        src={user4}
                         className="rounded-circle"
                         alt="avatar"
                         width="45"
                         height="45"
                       />
                       <div className="ms-3">
-                        <h6 className="mb-0">{tdata.name}</h6>
-                        <span className="text-muted">{tdata.mobileno}</span>
+                        <h6 className="mb-0">{tdata?.name || ''}</h6>
+                        <span className="text-muted">{tdata?.phone ||''}</span>
                       </div>
                     </div>
                   </td>
-                  <td>{tdata.work}</td>
+                  <td>{tdata?.role ||''}</td>
 
                 </tr>
               ))}
@@ -87,7 +56,7 @@ const ProjectTables = () => {
           </Table>
         </CardBody>
       </Card>
-    </div>
+    </div> :<div>loading</div>
   );
 };
 
