@@ -4,6 +4,9 @@ import { Navigate } from "react-router-dom";
 import FullLayout from "../layouts/FullLayout.js";
 
 /***** Pages ****/
+import  Privacy  from "../pages/Privacy.jsx"
+import  Terms from "../pages/Terms.jsx"
+
 import Starter from "../views/Starter.js";
 import CollectionAmount from "../views/CollectionsAmount.js";
 import AddMembers from "../views/AddMembers.js";
@@ -13,9 +16,9 @@ import Expenses from "../views/Expenses.js";
 import ExpensesDetails from "../components/Expensesdetails.jsx";
 import Login from "../views/Login.js";
 import AdminRoute from "./AdminRoute.js";
+
 import { element } from "prop-types";
-import { Privacy } from "../pages/Privacy.jsx"
-import {Terms} from "../pages/Terms.jsx"
+
 
 /***** Routes *****/
 const ThemeRoutes = [
@@ -70,7 +73,7 @@ const ThemeRoutes = [
      },
      {
         path:"/terms",element:<Terms />
-     }
+     },
     ],
   },
 ];
