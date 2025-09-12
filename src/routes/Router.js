@@ -14,8 +14,8 @@ import ExpensesDetails from "../components/Expensesdetails.jsx";
 import Login from "../views/Login.js";
 import AdminRoute from "./AdminRoute.js";
 import { element } from "prop-types";
-import {Privacy} from "../pages/Privacy.jsx"
-import {Terms} from "../pages/Terms.jsx"
+import { Privacy } from "./../pages/Privacy.jsx"
+import {Terms} from "./../pages/Terms.jsx"
 
 /***** Routes *****/
 const ThemeRoutes = [
