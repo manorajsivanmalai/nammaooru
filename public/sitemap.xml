@@ -1,24 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">  
+		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-    <loc>https://sivanmalairockers.netlify.app/starter</loc>
-    <lastmod>2025-09-12T18:00:00+00:00</lastmod>
-    <priority>1.00</priority>
-  </url>
-  <url>
-    <loc>https://sivanmalairockers.netlify.app/showexpenses</loc>
-  <lastmod> 2020-04-27T12:23:50+00:00 </lastmod>
-  <priority> 0.80 </priority>
-  </url>
-  <url>
-    <loc>https://sivanmalairockers.netlify.app/login</loc>
-    <lastmod> 2020-04-27T12:23:50+00:00 </lastmod>
-    <priority> 0.80 </priority>
-  </url>
-  <url>
-    <loc>https://sivanmalairockers.netlify.app/collectionAmount</loc>
-   <lastmod> 2020-04-27T12:23:50+00:00 </lastmod>
-   <priority> 0.80 </priority>
-  </url>
+	<loc>https://sivanmalairockers.netlify.app/</loc>
+	<lastmod>2025-09-13T18:10:04+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://sivanmalairockers.netlify.app/starter</loc>
+	<lastmod>2025-09-13T18:10:04+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://sivanmalairockers.netlify.app/collectionAmount</loc>
+	<lastmod>2025-09-13T18:10:04+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://sivanmalairockers.netlify.app/showexpenses</loc>
+	<lastmod>2025-09-13T18:10:04+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://sivanmalairockers.netlify.app/login</loc>
+	<lastmod>2025-09-13T18:10:04+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://sivanmalairockers.netlify.app/addmembers</loc>
+	<lastmod>2025-09-13T18:10:04+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://sivanmalairockers.netlify.app/memberdetails</loc>
+	<lastmod>2025-09-13T18:10:04+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://sivanmalairockers.netlify.app/expensesdetails</loc>
+	<lastmod>2025-09-13T18:10:04+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://sivanmalairockers.netlify.app/addexpenses</loc>
+	<lastmod>2025-09-13T18:10:04+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://sivanmalairockers.netlify.app/privacy</loc>
+	<lastmod>2025-09-13T18:10:04+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://sivanmalairockers.netlify.app/terms</loc>
+	<lastmod>2025-09-13T18:10:04+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
 </urlset>
