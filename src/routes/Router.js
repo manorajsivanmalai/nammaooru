@@ -60,7 +60,7 @@ const ThemeRoutes = [
         ),
       },
       { 
-        path: "/expenses", 
+        path: "/addexpenses", 
         element: (
           <AdminRoute>
             <Expenses />

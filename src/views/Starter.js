@@ -1,6 +1,6 @@
 import { Col, Row } from "reactstrap";
 import SalesChart from "../components/dashboard/SalesChart";
-import Feeds from "../components/dashboard/Feeds";
+// import Feeds from "../components/dashboard/Feeds";
 import ProjectTables from "../components/dashboard/ProjectTable";
 import Blog from "../components/dashboard/Blog";
 import bg3 from "../assets/images/bg/bg3.jpg";
@@ -53,7 +53,7 @@ const Starter = () => {
       <Col sm="6" lg="12" xl="12" xxl="12">
           <OverView />
         </Col>
-        <Col sm="6" lg="6" xl="7" xxl="8">
+        <Col sm="6" lg="6" xl="7" xxl="12">
           <SalesChart />
         </Col>
         {/* <Col sm="6" lg="6" xl="5" xxl="4">

@@ -7,11 +7,11 @@ const AddUser = () => {
 
  const { setMemclData }=useContext(DataContext);
  const [addLoad,setAddLoad]=useState(true);
-const [formData,setFormdata]=useState({
-    name:'',
-    amount:0,
-    category:'category'
-})
+  const [formData,setFormdata]=useState({
+      name:'',
+      amount:0,
+      category:'category'
+  })
 
 const handleFormSubmission =async (e) => {
         e.preventDefault();

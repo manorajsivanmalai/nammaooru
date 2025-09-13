@@ -14,7 +14,7 @@ const navigation = [
   },
   {
     title: "AddExpenses",
-    despath: "/expenses",
+    despath: "/addexpenses",
     icon: "bi bi-cash-coin",
   },
   

@@ -2,8 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import "../assets/scss/adduser.css";
 import { FaEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { IoMdArrowDroprightCircle,IoMdArrowDropleftCircle  } from "react-icons/io";
+import {
+  IoMdArrowDroprightCircle,
+  IoMdArrowDropleftCircle,
+} from "react-icons/io";
 import { DataContext } from "../contextapi/memberContextApi";
+import formatDate from '../utils/dateFormate';
+
 const Membertable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [categories, setCategories] = useState("");
@@ -11,8 +16,12 @@ const Membertable = () => {
   const [sortOrder, setSortOrder] = useState("asc");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-  const {memclData}=useContext(DataContext);
+  const { memclData } = useContext(DataContext);
 
+  const uniqueYears = [
+    ...new Set(memclData.map((item) => new Date(item.createdAt).getFullYear())),
+  ];
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
   const sortedData = [...memclData].sort((a, b) => {
     const aValue = a[sortBy];
@@ -24,13 +33,16 @@ const Membertable = () => {
     }
   });
 
-  const totalPages = Math.ceil(sortedData.filter(
-    (item) =>
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.category.toLowerCase().includes(searchTerm.toLowerCase())
-  )
-  .filter((item) => categories === "" || item.category === categories).length / itemsPerPage);
-
+  const totalPages = Math.ceil(
+    sortedData
+      .filter(
+        (item) =>
+          item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.category.toLowerCase().includes(searchTerm.toLowerCase()),
+      )
+      .filter((item) => categories === "" || item.category === categories)
+      .length / itemsPerPage,
+  );
 
   const handleSort = (key) => {
     if (sortBy === key) {
@@ -41,22 +53,19 @@ const Membertable = () => {
     }
   };
 
-
-
   const navigate = useNavigate();
   const handleLink = (item) => {
-     navigate("/memberdetails", { state: { member: item } });
+    navigate("/memberdetails", { state: { member: item } });
   };
 
-  const paginatedData = sortedData.filter(
-    (item) =>
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.category.toLowerCase().includes(searchTerm.toLowerCase())
-  )
-  .filter((item) => categories === "" || item.category === categories).slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  const paginatedData = sortedData
+    .filter(
+      (item) =>(
+        item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.category.toLowerCase().includes(searchTerm.toLowerCase())) && item.createdAt.includes(selectedYear),
+    )
+    .filter((item) => categories === "" || item.category === categories)
+    .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -70,30 +79,49 @@ const Membertable = () => {
     }
   };
 
-  useEffect(()=>{
-  
-  },[categories])
+  useEffect(() => {}, [categories]);
 
   return (
     <div className="member-table">
-      <div className="sort-options">
-        <input
-          type="text"
-          placeholder="Search by name or category"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <select
-          value={categories}
-          onChange={(e) => setCategories(e.target.value)}
-        >
-          <option value="">All Categories</option>
-          {[...new Set(memclData.map((item) => item.category))].map((category,index) => (
-            <option key={index} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
+      <div className="row">
+        <div className="col-md-4 my-2">
+          <input
+            type="text"
+            placeholder="Search by name or category"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+             className="form-control"
+          />
+        </div>
+        <div className="col-md-4 my-2">
+          <select
+            value={categories}
+            onChange={(e) => setCategories(e.target.value)}
+             className="form-control"
+          >
+            <option value="">All Categories</option>
+            {[...new Set(memclData.map((item) => item.category))].map(
+              (category, index) => (
+                <option key={index} value={category}>
+                  {category}
+                </option>
+              ),
+            )}
+          </select>
+        </div>
+        <div className="col-md-4 my-2">
+          <select
+            value={selectedYear || new Date().getFullYear()}
+            className="form-control"
+            onChange={(e) => setSelectedYear(e.target.value)}
+          >
+            {uniqueYears.map((item, index) => (
+              <option key={index} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       <table border="1" className="table">
         <thead>
@@ -107,30 +135,38 @@ const Membertable = () => {
             <th onClick={() => handleSort("amount")}>
               Amount {sortBy === "amount" && (sortOrder === "asc" ? "↑" : "↓")}
             </th>
+            <th>year</th>
             <th>Edit</th>
           </tr>
         </thead>
         <tbody>
-          {paginatedData
-           
-            .map((item,index) => (
-              <tr key={index}>
-                <td>{item.id}</td>
-                <td>{item.name}</td>
-                <td>{item.amount}</td>
-                <td>
-                  <FaEdit onClick={() => handleLink(item)} />
-                </td>
-              </tr>
-            ))}
+          {paginatedData.map((item, index) => (
+            <tr key={index}>
+              <td>{item.id}</td>
+              <td>{item.name}</td>
+              <td>{item.amount}</td>
+              <td>{formatDate(item.createdAt)}</td>
+              <td >
+               {formatDate(item.createdAt).includes(new Date().getFullYear()) && <FaEdit onClick={() => handleLink(item)} />}
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
       <div className="pagination">
-        <IoMdArrowDropleftCircle onClick={handlePreviousPage} disabled={currentPage === 1} style={{color:currentPage === 1?"#dbb1b1":"inherit"}}/>
+        <IoMdArrowDropleftCircle
+          onClick={handlePreviousPage}
+          disabled={currentPage === 1}
+          style={{ color: currentPage === 1 ? "#dbb1b1" : "inherit" }}
+        />
         <span>
           Page {currentPage} of {totalPages}
         </span>
-        <IoMdArrowDroprightCircle onClick={handleNextPage} disabled={currentPage === totalPages} style={{color:currentPage === totalPages?"#dbb1b1":"inherit"}}/>
+        <IoMdArrowDroprightCircle
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+          style={{ color: currentPage === totalPages ? "#dbb1b1" : "inherit" }}
+        />
       </div>
     </div>
   );

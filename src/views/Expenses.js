@@ -1,24 +1,38 @@
 import '../assets/scss/adduser.css';
 import { ExpensesContext } from "../contextapi/expensesContextApi";
-import { FaEdit ,FaSave} from "react-icons/fa";
+import { FaEdit, FaSave } from "react-icons/fa";
 import { IoMdArrowDroprightCircle, IoMdArrowDropleftCircle } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import React, { useContext, useState, useMemo } from "react";
+import formatDate from '../utils/dateFormate';
 
 const Expenses = () => {
     const { expenses, setExpenses, exploading } = useContext(ExpensesContext);
     const [formdata, setFormdata] = useState({ reason: '', amount: 0 });
     const [addLoad, setAddLoad] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
+    const [searchTerm, setSearchTerm] = useState('');
 
-    // Memoize paginated data and total pages to avoid unnecessary recalculation
+
+    const itemsPerPage = 10;
+      const uniqueYears = [
+    ...new Set(
+        expenses.map(item => new Date(item.createdAt).getFullYear())
+        )
+    ];
+    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+ 
     const totalPages = useMemo(() => exploading ? Math.ceil(expenses.length / itemsPerPage) : 0, [expenses, exploading]);
-    const paginatedData = useMemo(() => expenses.slice(
+   
+    
+    const paginatedData = useMemo(() => expenses.filter((item)=>((item.reason.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.amount.toString().includes(searchTerm) ||
+        item.createdAt.includes(searchTerm) ||
+        item.id.toString().includes(searchTerm))) && item.createdAt.includes(selectedYear)).slice(
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
-    ), [expenses, currentPage]);
-
+    ), [expenses, currentPage,selectedYear,searchTerm]);
+ 
     // Pagination handlers
     const handleNextPage = () => {
         if (currentPage < totalPages) setCurrentPage(currentPage + 1);
@@ -75,18 +89,43 @@ const Expenses = () => {
                 </div>
                 <div>
                     <button type="submit" disabled={!addLoad} style={{ backgroundColor: !addLoad ? "#ada1a1" : "red" }}>
-                        {!addLoad ? "Saving..." :<>Save  <FaSave /></> }
+                        {!addLoad ? "Saving..." : <>Save  <FaSave /></>}
                     </button>
                 </div>
             </form>
 
             <div className="expense-table">
+                <div className="row">
+                    <div className="col-md-6 my-2">
+                        <input
+                            type="text"
+                            placeholder="Search by name or category"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="form-control"
+                        />
+                    </div>
+                    <div className="col-md-6 my-2">
+                        <select
+                            value={selectedYear || new Date().getFullYear()}
+                            className="form-control"
+                            onChange={(e) => setSelectedYear(e.target.value)}
+                        >
+                            {uniqueYears.map((item, index) => (
+                                <option key={index} value={item}>
+                                    {item}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
                 <table className="table">
                     <thead>
                         <tr>
                             <td>S.No</td>
                             <td>Reason</td>
                             <td>Amount</td>
+                            <td>Date</td>
                             <td>Edit</td>
                         </tr>
                     </thead>
@@ -96,6 +135,7 @@ const Expenses = () => {
                                 <td>{index + 1}</td>
                                 <td>{item.reason}</td>
                                 <td>{item.amount}</td>
+                                <td>{formatDate(item.createdAt)}</td>
                                 <td><FaEdit onClick={() => handleLink(item)} /></td>
                             </tr>
                         )) : (

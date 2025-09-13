@@ -1,12 +1,18 @@
 import { ExpensesContext } from "../contextapi/expensesContextApi";
 import { useState, useContext, useMemo, useCallback } from "react";
 import { useDebounce } from 'use-debounce';
-
+import formatDate from '../utils/dateFormate';
 const ShowExpenses = () => {
   const { expenses, exploading } = useContext(ExpensesContext);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState(null);
   const [debouncedSearchTerm] = useDebounce(searchTerm, 500); // Debounce the search input by 500ms
+  const uniqueYears = [
+    ...new Set(
+      expenses.map(item => new Date(item.createdAt).getFullYear())
+    )
+  ];
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -34,12 +40,12 @@ const ShowExpenses = () => {
   // Memoize filtered data based on debounced search term
   const filteredData = useMemo(() => {
     return sortedData.filter((item) =>
-      item.reason.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
+      (item.reason.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
       item.amount.toString().includes(debouncedSearchTerm) ||
       item.createdAt.includes(debouncedSearchTerm) ||
-      item.id.toString().includes(debouncedSearchTerm)
+      item.id.toString().includes(debouncedSearchTerm)) &&  item.createdAt.includes(selectedYear)
     );
-  }, [debouncedSearchTerm, sortedData]);
+  }, [debouncedSearchTerm, sortedData,selectedYear]);
 
   const requestSort = useCallback((key) => {
     setSortConfig((prevConfig) => {
@@ -51,20 +57,13 @@ const ShowExpenses = () => {
     });
   }, []);
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
-  };
 
   return (
     !exploading ? (
       <div className="">
         <div className="row my-3">
-          <div className="col-md-12 my-2">
-            <h4 className="text-center my-3">All Expenses</h4>
+          <h4 className="text-center my-3">All Expenses</h4>
+          <div className="col-md-6 my-2">
             <input
               type="text"
               className="form-control"
@@ -73,6 +72,17 @@ const ShowExpenses = () => {
               onChange={handleSearch}
             />
           </div>
+         <div className="col-md-6 my-2">
+             <select value={selectedYear || new Date().getFullYear()}  className="form-control" onChange={(e) => setSelectedYear(e.target.value)}>
+              {uniqueYears.map((item, index) => (
+                <option  key={index} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+            
+          </div>
+
         </div>
         <div className="row">
           <div className="col-md-12 overflow-auto">
@@ -86,9 +96,9 @@ const ShowExpenses = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredData.length > 0 ? filteredData.map((item) => (
+                {filteredData.length > 0 ? filteredData.map((item,index) => (
                   <tr key={item.id}>
-                    <td style={{ width: "10%", textAlign: "center" }}>{item.id}</td>
+                    <td style={{ width: "10%", textAlign: "center" }}>{index+1}</td>
                     <td style={{ width: "40%", textAlign: "center" }}>{item.reason}</td>
                     <td style={{ width: "20%", textAlign: "center" }}>{item.amount.toLocaleString()}</td>
                     <td style={{ width: "40%", textAlign: "center" }}>{formatDate(item.createdAt)}</td>

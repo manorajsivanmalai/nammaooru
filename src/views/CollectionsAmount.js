@@ -1,12 +1,19 @@
 import React, { useContext, useState } from 'react';
 import { DataContext } from '../contextapi/memberContextApi';
 import "../assets/scss/adduser.css"
+import formatDate from '../utils/dateFormate';
 const CollectionsAmount = () => {
-  const { memclData, loading } = useContext(DataContext);
 
+  const { memclData, loading } = useContext(DataContext);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const uniqueYears = [
+    ...new Set(
+      memclData.map(item => new Date(item.createdAt).getFullYear())
+    )
+  ];
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -34,8 +41,9 @@ const CollectionsAmount = () => {
       (item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.amount.toString().includes(searchTerm) ||
         item.createdAt.includes(searchTerm) ||
-        item.id.toString().includes(searchTerm))
+        item.id.toString().includes(searchTerm)) && item.createdAt.includes(selectedYear)
   );
+
 
   const requestSort = (key) => {
     let direction = 'ascending';
@@ -49,22 +57,14 @@ const CollectionsAmount = () => {
     setSortConfig({ key, direction });
   };
 
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-
-    return `${day}-${month}-${year}`;
-  }
-
+ 
+  
   return (
     !loading ?(
       <div className="">
         <h4 className='text-center my-3'>All Collection Amount</h4>
         <div className="row my-3">
-          <div className="col-md-6 my-2" >
+          <div className="col-md-4 my-2" >
         
             <input
               type="text"
@@ -74,7 +74,7 @@ const CollectionsAmount = () => {
               onChange={handleSearch}
             />
           </div>
-          <div className="col-md-6 my-2">
+          <div className="col-md-4 my-2">
             <select
               className="form-control"
               value={selectedCategory}
@@ -85,6 +85,17 @@ const CollectionsAmount = () => {
                <option value="ourpeople">Our People</option>
                <option value="sponsors">Sponsors</option>
             </select>
+            
+          </div>
+           <div className="col-md-4 my-2">
+             <select value={selectedYear || new Date().getFullYear()}  className="form-control" onChange={(e) => setSelectedYear(e.target.value)}>
+              {uniqueYears.map((item, index) => (
+                <option  key={index} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+            
           </div>
         </div>
         <div className="row">
@@ -99,9 +110,9 @@ const CollectionsAmount = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredData.map((item) => (
+                {filteredData.map((item,index) => (
                   <tr key={item.id}>
-                    <td style={{width:"10%",textAlign:"center"}}>{item.id}</td>
+                    <td style={{width:"10%",textAlign:"center"}}>{index+1}</td>
                     <td style={{width:"30%",textAlign:"center"}}>{item.name}</td>
                     <td style={{width:"20%",textAlign:"center"}}>{item.amount.toLocaleString()}</td>
                     <td style={{width:"40%",textAlign:"center"}}>{formatDate(item.createdAt)}</td>

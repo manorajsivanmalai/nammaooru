@@ -5,7 +5,7 @@ const Members = require('../../model/Membertable');
 const Expenses=require("../../model/Expensestable")
 const AppDataSource = new DataSource({
   type: 'postgres',
-  url: process.env.POSTGRES_URL,
+  url: process.env.POSTGRES_URL ,
   synchronize: true,   
   logging: false,
   entities: [Members,Expenses],  

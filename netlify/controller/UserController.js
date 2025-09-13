@@ -1,7 +1,8 @@
 const express = require('express');
 const userRouter = express.Router();
 const { createPool } = require('@vercel/postgres');
-const connectionString =process.env.POSTGRES_URL;
+const connectionString =process.env.POSTGRES_URL ;
+
 
 const pool = createPool({
   connectionString: connectionString,

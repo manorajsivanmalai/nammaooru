@@ -3,22 +3,42 @@ import Chart from "react-apexcharts";
 import { ExpensesContext } from "../../contextapi/expensesContextApi";
 import { DataContext } from "../../contextapi/memberContextApi";
 import { useContext } from "react";
-const SalesChart = () => {
+const   SalesChart = () => {
   const {memclData, loading,} =useContext(DataContext);
   const {expenses,exploading,} =useContext(ExpensesContext);
-  const ttlclAmount = !loading && memclData?.length > 0
-  ? memclData.reduce((total, item) => {
-      const amount = parseInt(item.amount);
-      return total + (Number.isNaN(amount) ? 0 : amount); 
-    }, 0)
-  : 0;
+  const uniqueYears = [
+        ...new Set([
+            ...expenses.map(item => new Date(item.createdAt).getFullYear()),
+            ...memclData.map(item => new Date(item.createdAt).getFullYear())
+        ])
+        ].sort((a, b) => a - b);
+ const clAmountByYear = !loading && memclData?.length > 0
+  ? memclData.reduce((acc, item) => {
+      const year = new Date(item.createdAt).getFullYear();
+      const amount = parseInt(item.amount, 10);
+      acc[year] = (acc[year] || 0) + (Number.isNaN(amount) ? 0 : amount);
+      return acc;
+    }, {})
+  : {};
 
-const ttlExpense = !exploading && expenses?.length > 0
-  ? expenses.reduce((total, item) => {
-      const amount = parseInt(item.amount);
-      return total + (Number.isNaN(amount) ? 0 : amount); 
-    }, 0)
-  : 0;
+ const yearWiseTotalColection = Object.entries(clAmountByYear).map((item,i)=>{
+       return item[1];      
+  });
+  
+
+const expenseByYear = !exploading && expenses?.length > 0
+  ? expenses.reduce((acc, item) => {
+      const year = new Date(item.createdAt).getFullYear();
+      const amount = parseInt(item.amount, 10);
+      acc[year] = (acc[year] || 0) + (Number.isNaN(amount) ? 0 : amount);
+      return acc;
+    }, {})
+  : {};
+
+ const yearWiseTotalExpense = Object.entries(expenseByYear).map((item,i)=>{
+       return item[1];      
+  });
+  
   const options = {
     chart: {
       toolbar: {
@@ -46,9 +66,7 @@ const ttlExpense = !exploading && expenses?.length > 0
     },
     colors: ["#0d6efd", "#009efb", "#6771dc"],
     xaxis: {
-      categories: [
-        2025,2026,2027,2028,2029,2030
-      ],
+      categories: uniqueYears,
     },
     responsive: [
       {
@@ -56,7 +74,7 @@ const ttlExpense = !exploading && expenses?.length > 0
         options: {
           plotOptions: {
             bar: {
-              columnWidth: "60%",
+              columnWidth: "80%",
               borderRadius: 7,
             },
           },
@@ -67,11 +85,11 @@ const ttlExpense = !exploading && expenses?.length > 0
   const series = [
     {
       name: "totalCollection",
-      data: [ttlclAmount],
+      data: yearWiseTotalColection,
     },
     {
       name: "Expenses",
-      data: [ttlExpense],
+      data: yearWiseTotalExpense,
     },
   ];
 
